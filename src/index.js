@@ -4,7 +4,9 @@ import "./styles/styles.css";
 
 console.log("|Strive Beta|"); // Testing
 console.log("Developer: SoSu Studios"); // Testing
+console.log("Programmer: IBE"); // Testing
 console.log("Start Date: July-24-2024"); // Testing 
+
 console.log('\n'); // Testing 
 
 InitializeDOMContent(); 

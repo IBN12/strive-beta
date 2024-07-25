@@ -1,0 +1,45 @@
+/* body - The main body for the browser. */
+body{
+    padding: 0;
+    margin: 0; 
+}
+
+/* * - All the elements in the application. */
+*{
+    box-sizing: border-box;
+}
+
+/************************************************************************************************************************************************************************/
+/************************************************************************************************************************************************************************/
+/* |Mobile Viewports| */
+@media screen and (max-width: 600px){
+    /* |Main Content| */
+    #content{
+        border: 1px solid red; 
+        padding: 5px; 
+    }
+
+    /* |Main Menu Content| */
+    .main-menu-content{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+
+        border: 1px solid blue;
+    }
+
+    /* |Shuffle Cards Content| */
+    .shuffle-cards-content{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        
+        border: 1px solid  orange; 
+        margin-top: 10px;
+        padding: 3px;
+    }
+    .display-shuffled-cards{ /* Display Shuffled Cards */
+        border: 1px solid green; 
+    }
+}

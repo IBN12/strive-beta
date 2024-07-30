@@ -22,9 +22,20 @@ InitializeDOMContent();
  * Current Work/Continue Where Last Left Off: Continue working on the ShuffleCardsContent.js file. Display the 4 cards 
  * in a display section. Add certain animations to this file to make it more immersive. You should also work on the 
  * desktop version at the same time if possible. 
+ * 
+ * Date: July-29-2024
+ * New game program content was added to the ShuffleCardsContent.js file. DisplayNumberOfShuffles() function was added to the file
+ * in order for the user to see how times they've pressed the shuffle button. The user only gets 3 shuffles until they've reached the
+ * limit. 
+ * 
+ * UserMainTools.js file will hold the userMainTools object. This object will control all the properties that help the 
+ * user interact with the application such as 'End Shuffling', 'Number of Shuffles', 'User Win', 'User Loss', etc.
+ * 
+ * Current Work/Continue Where Last Left Off: Continue workin on the ShuffleCardsContent.js file. Display the 4 cards in a display section.
+ * Add certain animations to this file to make it more immersive. You should also work on the desktop version at the same time if possible. 
 */
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // |Testing Content Section|
-ShuffleCardsContent();
+ShuffleCardsContent(null);
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

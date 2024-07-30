@@ -34,12 +34,31 @@ body{
         display: flex;
         flex-direction: column;
         gap: 10px;
-        
+
         border: 1px solid  orange; 
         margin-top: 10px;
         padding: 3px;
     }
     .display-shuffled-cards{ /* Display Shuffled Cards */
         border: 1px solid green; 
+    }
+    .display-number-of-shuffles{ /* Display Number of Shuffles */
+        border: 1px solid black;
+        text-align: center; 
+    }
+    .shuffle-limit-reached{ /* Shuffle Limit Reached */
+        animation-name: shuffle-limit-reached-anim;
+        animation-duration: 1s;
+        animation-timing-function: ease-in-out;
+    }
+    @keyframes shuffle-limit-reached-anim{
+        from{
+            transform: scale(1); 
+            border-color: initial;
+        }
+        to{
+            transform: scale(1.1);  
+            border-color: red; 
+        }
     }
 }

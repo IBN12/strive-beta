@@ -9,6 +9,10 @@ body{
     box-sizing: border-box;
 }
 
+.no-clicks{
+    pointer-events: none; 
+}
+
 /************************************************************************************************************************************************************************/
 /************************************************************************************************************************************************************************/
 /* |Mobile Viewports| */
@@ -39,9 +43,84 @@ body{
         margin-top: 10px;
         padding: 3px;
     }
+
     .display-shuffled-cards{ /* Display Shuffled Cards */
+        display: flex; 
+        gap: 3px;
+
+        padding: 10px;
         border: 1px solid green; 
     }
+    .display-shuffled-cards > div{ /* Cards in the 'display shuffled cards' */ 
+        flex: 1;
+
+        text-align: center; 
+        font-size: 11px; 
+        border: 1px solid purple;
+        height: 80px;
+    }
+    .shuffle-card-animation{ /* shuffle card animation for 'display shuffled cards' */
+        animation-name: shuffle-card-anim;
+        animation-duration: 1s;
+        animation-timing-function: ease-in-out;
+    }
+    @keyframes shuffle-card-anim{
+        from{
+            transform: scale(1);
+        }
+        to{
+            transform: scale(1.2); 
+        }
+    }
+
+    .view-card{ /* View cards in 'display shuffled cards'*/
+        position: absolute;
+        top: 0;
+        right: 0; 
+        width: 100%;
+        height: 400px; 
+        padding: 5px;
+        border: 1px solid black; 
+        background-color: rgba(0, 0, 0, 0.658);
+    }
+    .open-view-card{
+        animation-name: open-view-card-anim;
+        animation-duration: .5s;
+        animation-timing-function: ease-out;
+        will-change: transform; 
+    }
+    @keyframes open-view-card-anim{
+        from{
+            transform: perspective(800px) translate3d(0, 0, -1500px); 
+        }
+        to{
+            transform: perspective(800px) translate3d(0,0,0);
+        }
+    }
+    .close-view-card{
+        animation-name: close-view-card-anim; 
+        animation-duration: .5s; 
+        animation-timing-function: ease-in;
+        will-change: transform; 
+    }
+    @keyframes close-view-card-anim{
+        from{
+            transform: perspective(800px) translate3d(0, 0, 0); 
+        }
+        to{
+            transform: perspective(800px) translate3d(0, 0, -1500px); 
+        }
+    }
+    .view-card > div{ 
+        display: flex;
+        justify-content: end;
+
+        border: 1px solid orange; 
+    }
+    .view-card > div > img[src]{ /* Close Button */
+        height: 50px;
+    }
+
     .display-number-of-shuffles{ /* Display Number of Shuffles */
         border: 1px solid black;
         text-align: center; 

@@ -2,6 +2,8 @@ import { userDeck } from "../GameProg/UserDeck";
 import { ShuffleCards } from "../GameProg/ShuffleCards";
 import { userMainTools } from "../GameProg/UserMainTools";
 
+import closeButton from '../images/tools/window-close.svg'; 
+
 /** |ShuffleCardsContent() Manual|
  *  For 'controls' Parameter:
  * controls = 0 => Reseting the entire shuffle cards content to display 
@@ -56,7 +58,99 @@ function DisplayShuffledCards(){
     const displayShuffledCards = document.createElement('div');
     displayShuffledCards.classList.add('display-shuffled-cards'); 
 
+    for (let i = 0; i < 4; i++)
+    {
+        const card = document.createElement('div'); 
+        displayShuffledCards.appendChild(card); 
+        if (userDeck.length === 0)
+        {
+            card.textContent = 'No Card'; 
+        }
+        else 
+        {
+            card.textContent = `${userDeck[i].name}`;
+            card.addEventListener('click', ViewCard); 
+        }
+    }
+
     shuffleCardsContent.appendChild(displayShuffledCards); 
+}
+
+// ShuffleCardsAnimation(): Produces an animation for the displayShuffledCards() when the user shuffles card. 
+function ShuffleCardsAnimation(){
+    const displayShuffledCards = document.querySelectorAll('.display-shuffled-cards > div');
+
+    displayShuffledCards.forEach((card, index) => {
+        switch(index){
+            case 0:
+                card.classList.add('shuffle-card-animation'); 
+                setTimeout(() => {card.classList.remove('shuffle-card-animation');}, 1000);
+                break;
+            case 1:
+                setTimeout(() => {card.classList.add('shuffle-card-animation');}, 1000);
+                setTimeout(() => {card.classList.remove('shuffle-card-animation');}, 2000); 
+                break;
+            case 2:
+                setTimeout(() => {card.classList.add('shuffle-card-animation');}, 2000);
+                setTimeout(() => {card.classList.remove('shuffle-card-animation');}, 3000);
+                break;
+            case 3:
+                setTimeout(() => {card.classList.add('shuffle-card-animation');}, 3000);
+                setTimeout(() => {card.classList.remove('shuffle-card-animation');}, 4000); 
+                break;
+            default:
+                return; 
+        }
+    });
+}
+
+// ViewCard(): Allows the user to view the card. 
+function ViewCard(e){
+    const content = document.getElementById('content'); 
+    const shuffleButton = document.querySelector('.shuffle-cards-content > button:nth-child(2)'); 
+    const startButton = document.querySelector('.shuffle-cards-content > button:nth-child(4)');
+    const displayShuffledCards = document.querySelector('.display-shuffled-cards');
+    
+    displayShuffledCards.classList.add('no-clicks');  
+    shuffleButton.disabled = true;
+    startButton.disabled = true; 
+
+    const viewCard = document.createElement('div'); 
+    viewCard.classList.add('view-card'); 
+    viewCard.classList.add('open-view-card');
+
+    const closeButtonContainer = document.createElement('div'); 
+    const closeButtonImage = document.createElement('img');
+    closeButtonImage.alt = 'View Card Close Button'; 
+    closeButtonImage.src = closeButton; 
+    closeButtonImage.addEventListener('click', CloseViewCard); 
+
+    const cardDescriptionContainer = document.createElement('div'); 
+    const cardName = document.createElement('div');
+    cardName.textContent = e.target.textContent;
+
+    viewCard.appendChild(closeButtonContainer);
+    viewCard.appendChild(cardDescriptionContainer); 
+    closeButtonContainer.appendChild(closeButtonImage); 
+    cardDescriptionContainer.appendChild(cardName); 
+    content.appendChild(viewCard); 
+}
+
+// CloseViewCard(): Will close the view card window. 
+function CloseViewCard(e){
+    const content = document.getElementById('content');
+    const shuffleButton = document.querySelector('.shuffle-cards-content > button:nth-child(2)');
+    const startButton = document.querySelector('.shuffle-cards-content > button:nth-child(4)');
+    const displayShuffledCards = document.querySelector('.display-shuffled-cards'); 
+    const viewCard = document.querySelector('.view-card');
+    viewCard.classList.remove('open-view-card'); 
+    viewCard.classList.add('close-view-card'); 
+
+    shuffleButton.disabled = false;
+    startButton.disabled = false; 
+
+    setTimeout(() => {content.removeChild(viewCard);}, 500); 
+    setTimeout(() => {displayShuffledCards.classList.remove('no-clicks');}, 700); 
 }
 
 // ShuffleButton(): The main shuffle button.
@@ -75,9 +169,24 @@ function ShuffleButton(){
 function ShuffleInitiatorCards(){
     if (!userMainTools.endShuffles)
     {
+        const shuffleButton = document.querySelector('.shuffle-cards-content > button:nth-child(2)');
+        shuffleButton.disabled = true; 
+
+        const startButton = document.querySelector('.shuffle-cards-content > button:nth-child(4)');
+        startButton.disabled = true; 
+
         userDeck.length = 0; // Reset the userDeck for until the user reaches 3 shuffles. 
+
         ShuffleCards(); 
-        ShuffleCardsContent(0); // Reset For: 0 => Displaying the Number of Shuffles. 
+
+        ShuffleCardsAnimation();
+
+        // WGO: Give the 'shuffle card animation' time to perform for at least 4 seconds
+        // and then 'reset the shuffle cards content section' to display a new amount of
+        // shuffles. 
+        setTimeout(() => {
+            ShuffleCardsContent(0); // Reset For: 0 => Displaying the Number of Shuffles. 
+        }, 5000);
     }
     else 
     {

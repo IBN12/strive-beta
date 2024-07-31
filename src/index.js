@@ -31,8 +31,16 @@ InitializeDOMContent();
  * UserMainTools.js file will hold the userMainTools object. This object will control all the properties that help the 
  * user interact with the application such as 'End Shuffling', 'Number of Shuffles', 'User Win', 'User Loss', etc.
  * 
- * Current Work/Continue Where Last Left Off: Continue workin on the ShuffleCardsContent.js file. Display the 4 cards in a display section.
+ * Current Work/Continue Where Last Left Off: Continue working on the ShuffleCardsContent.js file. Display the 4 cards in a display section.
  * Add certain animations to this file to make it more immersive. You should also work on the desktop version at the same time if possible. 
+ * 
+ * Date: July-31-2024
+ * New functions have been added to the ShuffleCardsContent.js file. The DisplayShuffledCards(), ShuffledCardsAnimation(), ViewCard(), and CloseViewCard().
+ * The DisplyShuffledCards() function will display the new deck that the player has shuffled. The ShuffledCardsAnimation() function will initiate an
+ * animation sequence with for the DisplayShuffledCards() function. The ViewCard() and closeViewCard() functions will open and close a window that describes
+ * the card that was shuffled in the DisplayShuffledCards().
+ * 
+ * Current Work/Continue Where Last Left Off: Continue adding extra functionality to the ShuffledCardsContent.js file if needed. 
 */
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -3,6 +3,7 @@
 export function InitializeDOMContent(){
     MainMenuContentDOM(); 
     ShuffleCardsContentDOM(); 
+    LoadingRoomDOM(); 
 }
 
 // MainMenu(): Main menu for the application.
@@ -61,7 +62,7 @@ function SoSuStudio(){
     mainMenuContent.appendChild(sosuStudio);
 }
 
-// ShuffleCardsContentDOM(): The shuffle cards content DOM Content.
+// ShuffleCardsContentDOM(): The shuffle cards content DOM.
 function ShuffleCardsContentDOM(){
     const content = document.getElementById('content');
 
@@ -69,4 +70,14 @@ function ShuffleCardsContentDOM(){
     shuffleCardsContent.classList.add('shuffle-cards-content');
 
     content.appendChild(shuffleCardsContent); 
+}
+
+// LoadingRoomDOM(): The loading room DOM.
+function LoadingRoomDOM(){
+    const content = document.getElementById('content'); 
+
+    const loadingRoomDOM = document.createElement('div'); 
+    loadingRoomDOM.classList.add('loading-room-content'); 
+
+    content.appendChild(loadingRoomDOM); 
 }

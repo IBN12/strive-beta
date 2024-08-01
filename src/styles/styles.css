@@ -140,4 +140,10 @@ body{
             border-color: red; 
         }
     }
+
+    .loading-room-content{
+        border: 1px solid purple; 
+        margin-top: 10px; 
+        padding: 3px;
+    }
 }

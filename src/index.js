@@ -1,5 +1,6 @@
 import { InitializeDOMContent } from "./DOM-Content/DomContent";
 import { ShuffleCardsContent } from "./GameContent/ShuffleCardsContent";
+import { LoadingRoom } from "./GameContent/LoadingRoom";
 import "./styles/styles.css"; 
 
 console.log("|Strive Beta|"); // Testing
@@ -41,9 +42,34 @@ InitializeDOMContent();
  * the card that was shuffled in the DisplayShuffledCards().
  * 
  * Current Work/Continue Where Last Left Off: Continue adding extra functionality to the ShuffledCardsContent.js file if needed. 
+ * 
+ * Date: August-1-2024
+ * 'LoadingRoomDOM' function was added to the DOMContent.js file. This DOM file will contain recursion algorithms that may
+ * have a long run time due to the amount of items being inputted. There may also be asynchronous algorithms being initiated.
+ * The loading room will help with the processing time for each item and algorithm so the game will run smoother. The initiation
+ * file will is called LoadingRoom.js and is located in the GameContent folder. 
+ * 
+ * The 'shuffleComputerCards' function was added to the LoadingRoom.js file. This function will contain a recursion algorithm that 
+ * shuffles the computer deck of cards with the same function that shuffled the user deck. The computer deck will be compared to the 
+ * user deck to find 2 or more duplicate cards. If there are 2 or more duplicate cards, then the function will be called repeatedly until only
+ * one duplicate is found. The 'loadingroom' is being tested in the index.js file along with the 'ShuffleCardsContent' function.
+ * 
+ * Current Work/Coninue Where Last Left Off: N/A
 */
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // |Testing Content Section|
+// *Testing the 'ShuffleCardsContent' function.
 ShuffleCardsContent(null);
+
+// Testing the 'loading room' with ShuffleComputerCards.js file. 
+const content = document.getElementById('content'); 
+const testButton = document.createElement('button'); 
+testButton.textContent = "Test Button";  
+testButton.addEventListener('click', LoadUp);
+content.appendChild(testButton); 
+function LoadUp()
+{
+    LoadingRoom(1); 
+}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

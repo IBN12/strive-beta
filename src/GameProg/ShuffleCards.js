@@ -3,6 +3,7 @@ import { userDeck } from "./UserDeck";
 
 // ShuffleCards(): Will Shuffle all of the initiator cards.
 export function ShuffleCards(){
+    let newDeck = []; 
     let supraCards = [];
     let fereCards = [];
     let bonumCards = [];
@@ -23,14 +24,14 @@ export function ShuffleCards(){
         }
     }); 
 
-    userDeck.push(supraCards[SupraCards(supraCards)]);
-    userDeck.push(fereCards[FereCards(fereCards)]);
+    newDeck.push(supraCards[SupraCards(supraCards)]);
+    newDeck.push(fereCards[FereCards(fereCards)]);
     indexArr = BonumCards(bonumCards); 
     indexArr.forEach((bonumIndex) => {
-        userDeck.push(bonumCards[bonumIndex]);
+        newDeck.push(bonumCards[bonumIndex]);
     });
 
-    console.log('The User Deck: ', userDeck); // Testing 
+    return newDeck; 
 }
 
 // SupraCards(): will shuffle the supra cards.

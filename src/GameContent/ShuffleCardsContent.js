@@ -177,7 +177,9 @@ function ShuffleInitiatorCards(){
 
         userDeck.length = 0; // Reset the userDeck for until the user reaches 3 shuffles. 
 
-        ShuffleCards(); 
+        userDeck = ShuffleCards(); 
+        console.log('New User Deck: ', userDeck); // Testing 
+        console.log('\n'); // Testing 
 
         ShuffleCardsAnimation();
 
@@ -222,6 +224,7 @@ function StartGame(){
 
     const startGameButton = document.createElement('button');
     startGameButton.textContent = "Start Game"; 
+    startGameButton.addEventListener('click', () => {console.log('TO: ShuffleComputerCards() - Loading Room');})
 
     shuffleCardsContent.appendChild(startGameButton);
 }

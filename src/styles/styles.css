@@ -1,3 +1,6 @@
+:root{
+    --battleStationHalfWidth:0px; 
+}
 /* body - The main body for the browser. */
 body{
     padding: 0;
@@ -141,9 +144,175 @@ body{
         }
     }
 
+    /* |Loading Room Content| */
     .loading-room-content{
         border: 1px solid purple; 
         margin-top: 10px; 
         padding: 3px;
+    }
+
+    /* |Battle Arena Content| */
+    .battle-arena-content{ 
+        display: flex; 
+        flex-direction: column; 
+        gap: 10px; 
+
+        border: 1px solid lightcoral;
+        margin-top: 10px;
+        padding: 3px; 
+    }
+    .singularity-point-station{ /* Singularity Point Station */
+        display: flex;
+
+        border: 1px solid darkorange; 
+        padding: 3px; 
+    }
+    .singularity-point-station > div{ /* User Singularity Points & Comp Singularity Points */
+        flex: 1; 
+
+        border: 1px solid red;
+        text-align: center;
+    }
+    .battle-station{ /* Battle Station */
+        display: flex;
+        justify-content: space-between; 
+        gap: 100px;
+
+        border: 1px solid blue;
+        padding: 3px;
+    }
+    .battle-station > div{ /* User & Computer battle card */
+        border: 1px solid black;
+        height: 80px; /* Testing width */
+        width: 80px; /* Testing height */
+    }
+
+    .card-deck-station{ /* Card Deck Station */
+        display: flex;
+        justify-content: space-between;
+        gap: 5px;
+
+        border: 1px solid darkgreen;
+        padding: 3px;
+    }
+    .card-deck-station > div:nth-child(1){ /* User Deck Station */
+        display: flex;
+        gap: 5px;
+
+        border: 1px solid black;
+        padding: 2px;
+    }
+    .card-deck-station > div:nth-child(1) > div{ /* User cards in deck station */ 
+        text-align: center; 
+        border: 1px solid red;
+        font-size: 8px;
+        width: 30px; /* Testing width */
+    }
+
+    .card-deck-station > div:nth-child(2){ /* Comp Deck Station */
+        display: flex;
+        gap: 5px;
+        
+        border: 1px solid black;
+        padding: 2px;
+    }
+    .card-deck-station > div:nth-child(2) > div{ /* Comp cards in deck station */
+        text-align: center;
+        border: 1px solid blue;
+        font-size: 8px;
+        width: 30px;  /* Testing width */ 
+    }
+
+    .card-stat-station{ /* Card Stat Station */
+        display: flex; 
+        justify-content: space-around; 
+        gap: 100px; 
+
+        border: 1px solid yellowgreen; 
+        padding: 2px; 
+    }
+    .card-stat-station > div /* User & Comp Card Stats */
+    {
+        border: 1px solid black; 
+        font-size: 15px;
+        padding: 3px; 
+    }
+
+    .control-station{ /* Control Station */
+        display: flex; 
+        justify-content: center; 
+        gap: 5px; 
+
+        border: 1px solid darkcyan;
+        padding: 2px; 
+    }
+
+    .user-atk-movement{ /* User Attack Movement */
+        animation-name: userAtkMovement;
+        animation-duration: .5s;
+        animation-timing-function: ease-out;
+        will-change: transform; 
+    }
+    @keyframes userAtkMovement{
+        from{
+            transform: translateX(0);
+        }
+        to{
+            transform: translateX(var(--battleStationHalfWidth)); 
+        }
+    }
+
+    .damage-container{ /* User Damage Container Message */
+        position: absolute;
+        border: 1px solid black;
+
+        top: 450px; /* Will need to change later due to testing placements. */
+        animation-name: damageContainerAnim;
+        animation-duration: 1s;
+        animation-timing-function: ease-in-out;
+        animation-fill-mode: forwards; 
+    }
+    @keyframes damageContainerAnim{
+        from{
+            transform: translate3d(0,0,0);
+        }
+        to{
+            transform: translate3d(-120px, -20px, 300px);
+        }
+    }
+
+    .comp-atk-movement{ /* Computer Attack Movement */
+        animation-name: compAtkMovement;
+        animation-duration: .5s;
+        animation-timing-function: ease-in-out;
+        will-change: transform;
+    }
+    @keyframes compAtkMovement{
+        from{
+            transform: translateX(0);
+        }
+        to{
+            transform: translateX(var(--battleStationHalfWidth));
+        }
+    }
+
+    .comp-damage-container{ /* Computer Damage Container Message */
+        position: absolute;
+        border: 1px solid black;
+
+        top: -10px;
+        right: 300px;
+        animation-name: compDamageContainerAnim;
+        animation-duration: 1s;
+        animation-timing-function: ease-in-out;
+        animation-fill-mode: forwards;
+    }
+    @keyframes compDamageContainerAnim{
+        from{
+            transform: translate3d(0,0,0);
+        }
+        to{
+            transform: translate3d(140px, -30px, 300px); 
+        }
     }
 }

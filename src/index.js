@@ -55,6 +55,13 @@ InitializeDOMContent();
  * one duplicate is found. The 'loadingroom' is being tested in the index.js file along with the 'ShuffleCardsContent' function.
  * 
  * Current Work/Coninue Where Last Left Off: N/A
+ * 
+ * Date: August-7-2024
+ * The 'BattleArenaContent' function will be loaded up after the 'LoadingRoom' is complete. The 'BattleArena' function has been improved with new functions.
+ * The user can switch their 'main battle card' for other cards in their deck during battle. The user and computer will gain sp (singularity points) after
+ * each attack that isn't a miss. There are three types of attacks: regular attack, critical attack, and miss. Regular attacks cause regular damage, and 
+ * critical attacks cause critical damage. The 'Control Station' function will allow the user to initiate commands during battle. The 'Button Activity Time' function
+ * will use the BAT system. The BAT system will disable UI and button controls in the application during battle animations to prevent errors. 
 */
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

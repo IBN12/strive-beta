@@ -4,6 +4,7 @@ export function InitializeDOMContent(){
     MainMenuContentDOM(); 
     ShuffleCardsContentDOM(); 
     LoadingRoomDOM(); 
+    BattleArenaDOM();  
 }
 
 // MainMenu(): Main menu for the application.
@@ -80,4 +81,14 @@ function LoadingRoomDOM(){
     loadingRoomDOM.classList.add('loading-room-content'); 
 
     content.appendChild(loadingRoomDOM); 
+}
+
+// BattleArena(): The main battle arena.
+function BattleArenaDOM(){
+    const content = document.getElementById('content');
+
+    const battleArenaDOM = document.createElement('div'); 
+    battleArenaDOM.classList.add('battle-arena-content');
+
+    content.appendChild(battleArenaDOM); 
 }

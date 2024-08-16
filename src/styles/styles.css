@@ -315,4 +315,74 @@ body{
             transform: translate3d(140px, -30px, 300px); 
         }
     }
+    
+    .death{ /* Death for User|Comp Cards. */
+        background-color: red;
+        animation-name: deathAnim;
+        animation-duration: .6s;
+        animation-timing-function: ease-in-out;
+    }
+    @keyframes deathAnim{
+        0%{
+            transform: rotateX(0);
+        }
+        20%{
+            transform: rotateX(90deg);
+        }
+        40%{
+            transform: rotateX(0);
+        }
+        60%{
+            transform: rotateX(90deg);
+        }
+        80%{
+            transform: rotateX(0); 
+        }
+        100%{
+            transform: rotateX(90deg); 
+        }
+    }
+
+    .critical-hit-damage{ /* Critical Hit Damage Animation */
+        animation-name: criticalHitDmgAnim;
+        animation-duration: .3s;
+        animation-timing-function: ease-in-out;
+    }
+    @keyframes criticalHitDmgAnim{
+        0%{
+            transform: rotateY(60deg);
+        }
+        30%{
+            transform: rotateY(0);
+        }
+        50%{
+            transform: rotateY(-60deg);
+        }
+        70%{
+            transform: rotateY(0);
+        }
+        100%{
+            transform: rotateY(60deg); 
+        }
+    }
+
+    .regular-hit-damage{ /* Regular Hit Damage Animation */
+        animation-name: regularHitDmgAnim;
+        animation-duration: .3s;
+        animation-timing-function: ease-in-out;
+    }
+    @keyframes regularHitDmgAnim{
+        0%{
+            transform: rotateY(30deg); 
+        }
+        50%{
+            transform: rotateY(0); 
+        }
+        70%{
+            transform: rotateY(-30deg); 
+        }
+        100%{
+            transform: rotateY(0); 
+        }
+    }
 }

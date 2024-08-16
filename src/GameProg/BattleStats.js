@@ -1,6 +1,7 @@
 import { userMainTools } from "./UserMainTools";
 import { compMainTools } from "./CompMainTools";
 import { SingularityFactory } from "./SingularityFactory";
+import { compDeck } from "./CompDeck";
 
 // BattleStats(): Will handle all the battle stats here.
 export function BattleStats(attacker, atkType){
@@ -28,9 +29,24 @@ function UserBattleStats(atkType){
         compMainTools.mainBattleCard.esse = compMainTools.mainBattleCard.esse - (userMainTools.mainBattleCard.atk * atkPoints[atkIndex]);
         compMainTools.mainBattleCard.esse = Math.trunc(compMainTools.mainBattleCard.esse); 
     
+        // Computer Life/Essence: 
         if (compMainTools.mainBattleCard.esse <= 0)
         {
             compMainTools.mainBattleCard.esse = 0; 
+        }
+
+        // Test if the first comp card has been hit. This allow the computer to use more battle tactics when triggered:
+        if (compMainTools.cardSwitches === 0)
+        {
+            if (atkPoints[atkIndex] !== 0) // If not a miss, then a hit. 
+            {
+                compDeck.forEach((card) => {
+                    if (card.name === compMainTools.mainBattleCard.name)
+                    {
+                        card.beenHit = true; 
+                    }
+                });
+            }
         }
             
         if (atkPoints[atkIndex] === 0)

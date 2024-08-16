@@ -6,6 +6,7 @@ export let InitiatorCards = [
         def: 12,
         esse: 100,
         tempName: 'Tobo',
+        beenHit: false, 
     },
     {
         name: "The One From System",
@@ -13,7 +14,8 @@ export let InitiatorCards = [
         atk: 46,
         def: 10,
         esse: 100,
-        tempName: 'Jace', 
+        tempName: 'Jace',
+        beenHit: false,
     }, 
     {
         name: "Spunky With The Funky Draco",
@@ -22,6 +24,7 @@ export let InitiatorCards = [
         def: 11,
         esse: 100,
         tempName: 'Spunky', 
+        beenHit: false,
     },
     {
         name: "The Trendsetter Rotao",
@@ -30,6 +33,7 @@ export let InitiatorCards = [
         def: 18,
         esse: 100,
         tempName: 'Rotao',
+        beenHit: false, 
     },
     {
         name: "Allybelle",
@@ -38,6 +42,7 @@ export let InitiatorCards = [
         def: 15,
         esse: 100, 
         tempName: 'Ally',
+        beenHit: false, 
     },
     {
         name: "The Experiment",
@@ -46,6 +51,7 @@ export let InitiatorCards = [
         def: 13,
         esse: 100, 
         tempName: 'Mason',
+        beenHit: false, 
     },
     {
         name: "Dan The Prol",
@@ -54,6 +60,7 @@ export let InitiatorCards = [
         def: 22,
         esse: 100,
         tempName: 'Dan', 
+        beenHit: false, 
     },
     {
         name: "Mac The Rat",
@@ -62,6 +69,7 @@ export let InitiatorCards = [
         def: 28,
         esse: 100,
         tempName: 'Mac', 
+        beenHit: false, 
     },
     {
         name: "A Karen",
@@ -70,6 +78,7 @@ export let InitiatorCards = [
         def: 26,
         esse: 100,
         tempName: 'Karen',
+        beenHit: false, 
     },
     {
         name: "The office Worker Ken",
@@ -78,5 +87,6 @@ export let InitiatorCards = [
         def: 25,
         esse: 100,
         tempName: 'Ken', 
+        beenHit: false, 
     }
 ]

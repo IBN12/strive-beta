@@ -3,6 +3,7 @@ import { compDeck } from "../GameProg/CompDeck";
 import { userMainTools } from "../GameProg/UserMainTools";
 import { compMainTools } from "../GameProg/CompMainTools";
 import { BattleStats } from "../GameProg/BattleStats";
+import { CompTactics } from "../GameProg/CompTactics";
 
 /** |Battle Arena Content Manual| 
  * => For 'controls' Parameter:
@@ -17,11 +18,18 @@ import { BattleStats } from "../GameProg/BattleStats";
  * The reset is for the 'Card Stat Station' after the user and computer take turns
  * attacking each other and produce damage messages for regular damage, critical hits, and misses. 
  * This reset happens after .5 seconds because this is the user attack and computer attack time
- * duration. The 'BAT' (Button Activity Time) will continue with adding keeping the UI-buttons 
+ * duration. The 'BAT' (Button Activity Time) will continue with keeping the UI-buttons 
  * disabled during the animated attacks to prevent any possible errors. 
  * 
  * controls = 3 => Resets the original content after 'controls = 2'. After the damage message has been produced,
  * all the original content will be reset after 1 second has passed for the damage message. 
+ * 
+ * controls = 4 => Resets the original content after the death of a computer card. 
+ * 
+ * controls = 5 => TODO: Will reset content for the user defeat. 
+ * 
+ * controls = 6 => Resets the original content after the computer has defeated entirely. Will display
+ * 'No Card', 'No Stats', and 'Empty Deck' in the 'computer battle property stations' after it's been defeated.
 */
 
 // BattleArenaContent(): The main battle arena content.
@@ -82,6 +90,37 @@ export function BattleArenaContent(controls){
         CardDeckStation(); 
         ControlStation(); 
         ButtonActivityTime(2); 
+        Death(); 
+    }
+    else if (controls === 4)
+    {
+        battleArenaContent.removeChild(singularityPointStation); 
+        battleArenaContent.removeChild(battleStation); 
+        battleArenaContent.removeChild(cardStatStation); 
+        battleArenaContent.removeChild(cardDeckStation); 
+        battleArenaContent.removeChild(controlStation); 
+
+        SingularityPointStation();
+        BattleStation(2); // 2 => Computer Death Number
+        CardStatStation(); 
+        CardDeckStation(); 
+        ControlStation();
+        ButtonActivityTime(2);
+    }
+    else if (controls === 6)
+    {
+        battleArenaContent.removeChild(singularityPointStation);
+        battleArenaContent.removeChild(battleStation); 
+        battleArenaContent.removeChild(cardStatStation);
+        battleArenaContent.removeChild(cardDeckStation); 
+        battleArenaContent.removeChild(controlStation); 
+
+        SingularityPointStation();
+        BattleStation(3); // 3 => Computer Defeated Number
+        CardStatStation(); 
+        CardDeckStation(); 
+        ControlStation(); 
+        ButtonActivityTime(3); 
     }
 }
 
@@ -109,6 +148,16 @@ function ButtonActivityTime(controls){
                 card.classList.remove('no-clicks'); 
             });
         }, 2000); // Note: The time for this BAT will change due to the computer attack timing. 
+    }
+    else if (controls === 3)
+    {
+        controlStationButtons.forEach((button) => {
+            button.disabled = true;
+        });
+
+        userDeckStation.forEach((card) => {
+            card.classList.add('no-clicks'); 
+        }); 
     }
 }
 
@@ -148,6 +197,14 @@ function BattleStation(controls){
     {
         userCard.textContent = userMainTools.mainBattleCard.name; 
     }
+    else if (controls === 2)
+    {
+        userCard.textContent = userMainTools.mainBattleCard.name; 
+    }
+    else if (controls === 3)
+    {
+        userCard.textContent = userMainTools.mainBattleCard.name; 
+    }
 
     // Main Computer Battle Card: 
     const compCard = document.createElement('div');
@@ -159,6 +216,16 @@ function BattleStation(controls){
     else if (controls === 1)
     {
         compCard.textContent = compMainTools.mainBattleCard.name; 
+    }
+    else if (controls === 2)
+    {
+        compMainTools.mainBattleCard = compDeck[0];
+        compCard.textContent = compMainTools.mainBattleCard.name; 
+    }
+    else if (controls === 3)
+    {
+        compMainTools.mainBattleCard = null; 
+        compCard.textContent = 'No Card'; 
     }
 
     battleStation.appendChild(userCard); 
@@ -202,30 +269,37 @@ function CardStatStation(){
 
     // Computer Card Stats: 
     const compCardStat = document.createElement('div');
-    compDeck.forEach((card) => {
-        if (card.tempName === compMainTools.mainBattleCard.tempName)
-        {
-            const cardName = document.createElement('div'); 
-            cardName.textContent = `Name: ${card.tempName}`; 
-            compCardStat.appendChild(cardName); 
-
-            const cardCate = document.createElement('div'); 
-            cardCate.textContent = `Cate: ${card.cate}`; 
-            compCardStat.appendChild(cardCate); 
-
-            const cardAtk = document.createElement('div');
-            cardAtk.textContent = `Atk: ${card.atk}`;
-            compCardStat.appendChild(cardAtk);
-
-            const cardDef = document.createElement('div');
-            cardDef.textContent = `Def: ${card.def}`;
-            compCardStat.appendChild(cardDef); 
-
-            const cardEsse = document.createElement('div'); 
-            cardEsse.textContent = `Esse: ${card.esse}`;
-            compCardStat.appendChild(cardEsse); 
-        }
-    })
+    if (compMainTools.mainBattleCard === null)
+    {
+        compCardStat.textContent = 'No Stats'; 
+    }
+    else
+    {
+        compDeck.forEach((card) => {
+            if (card.tempName === compMainTools.mainBattleCard.tempName)
+            {
+                const cardName = document.createElement('div'); 
+                cardName.textContent = `Name: ${card.tempName}`; 
+                compCardStat.appendChild(cardName); 
+    
+                const cardCate = document.createElement('div'); 
+                cardCate.textContent = `Cate: ${card.cate}`; 
+                compCardStat.appendChild(cardCate); 
+    
+                const cardAtk = document.createElement('div');
+                cardAtk.textContent = `Atk: ${card.atk}`;
+                compCardStat.appendChild(cardAtk);
+    
+                const cardDef = document.createElement('div');
+                cardDef.textContent = `Def: ${card.def}`;
+                compCardStat.appendChild(cardDef); 
+    
+                const cardEsse = document.createElement('div'); 
+                cardEsse.textContent = `Esse: ${card.esse}`;
+                compCardStat.appendChild(cardEsse); 
+            }
+        });
+    }
 
     cardStatStation.appendChild(userCardStat);
     cardStatStation.appendChild(compCardStat); 
@@ -260,6 +334,13 @@ function CardDeckStation(){
             card.textContent = compDeck[i].tempName; 
             compDeckStation.appendChild(card);
         }
+    }
+
+    // WGO: Display 'Empty Deck' if the computer has no more cards.  
+    
+    if (compDeck.length === 1 || compDeck.length === 0)
+    {
+        compDeckStation.textContent = 'Empty Deck'; 
     }
 
     cardDeckStation.appendChild(userDeckStation);
@@ -325,45 +406,189 @@ function UserAttack(e){
 
         const damage = BattleStats('user', e.target.textContent); 
 
+        // WGO: .5 seconds to display the amount of damage to the computer and reset the 'Battle Arena Content'. 
+        // Check The "Battle Arena Content Manual" for more. 
         setTimeout(() => {
             const damageContainer = document.createElement('div');
             damageContainer.classList.add('damage-container'); 
             damageContainer.textContent = damage; 
             compCard.appendChild(damageContainer);
 
+            HitAttributes(damage, compCard, userMainTools); 
+
             BattleArenaContent(2); 
         }, 500);
     }
 
-    // WGO: Initiate the computer attack after 3 seconds. 
-    setTimeout(() => {
-        ComputerAttack();
-    }, 3000);
+    // WGO: Stop computer from attacking if the 'comp main battle card' is dead. 
+    if (compMainTools.mainBattleCard.esse !== 0)
+    {
+        // WGO: Initiate the computer attack after 3 seconds. 
+        setTimeout(() => {
+            ComputerAttack();
+        }, 3000);
+    }
 }
 
 // ComputerAttack(): Will handle all the computer attacks. 
 function ComputerAttack(){
-    const atkType = 'Attack';
+    /** |Computer Intelligence|
+     * (These computer intelligence properties will be changed through out the applications development.)
+     * Card Switch - Let the computer have '5 card switches' after its supra has been attacked. 
+     * Once the 5 card switches have been used, the computers card switches will be set back to 0
+     * and another attack to the supra will give the computer another 5 cards. 
+     * switches. Attacks done to a fere and bonum card will only give the computer 3 card switches. 
+    */
+    const battleStation = document.querySelector('.battle-station');
+    const compCard = document.querySelector('.battle-station > div:nth-child(2)');  
+    const userCard = document.querySelector('.battle-station > div:nth-child(1)');
 
-    if (atkType === 'Attack')
+    if (compMainTools.cardSwitches === 0)
     {
-        const battleStation = document.querySelector('.battle-station'); 
-        document.documentElement.style.setProperty('--battleStationHalfWidth', `${-(battleStation.clientWidth / 4)}px`);
-
-        const compCard = document.querySelector('.battle-station > div:nth-child(2)'); 
-        compCard.classList.add('comp-atk-movement'); 
-
-        const damage = BattleStats('computer', atkType); 
-        console.log('Computer Attack: ', damage); // Testing 
-
-        setTimeout(() => {
-            const compDamageContainer = document.createElement('div'); 
-            compDamageContainer.classList.add('comp-damage-container'); 
-            compDamageContainer.textContent = damage; 
-            compCard.appendChild(compDamageContainer); 
-
-            BattleArenaContent(2); 
-        }, 500);
+        compDeck.forEach((card) => {
+            if (card.name === compMainTools.mainBattleCard.name)
+            {
+                if (card.cate === 'supra')
+                {
+                    if (card.beenHit === true)
+                    {
+                        compMainTools.cardSwitches = 5; 
+                        card.beenHit = false; 
+                    }
+                }
+            }
+        });
     }
 
+    const atkType = 'Attack'; // Testing property
+    const compChoice = ['Attack', 'Switch']; // // Testing array
+
+    if (compMainTools.cardSwitches >  0)
+    {
+        const randomChoice = Math.floor(Math.random() * compChoice.length); 
+
+        if (compChoice[randomChoice] === 'Attack')
+        {
+            document.documentElement.style.setProperty('--battleStationHalfWidth', `${-(battleStation.clientWidth / 4)}px`);
+
+            compCard.classList.add('comp-atk-movement'); 
+
+            const damage = BattleStats('computer', atkType); 
+            console.log('Computer Attack: ', damage); // Testing
+            console.log('\n'); // Testing
+
+            setTimeout(() => {
+                const compDamageContainer = document.createElement('div'); 
+                compDamageContainer.classList.add('comp-damage-container'); 
+                compDamageContainer.textContent = damage; 
+                compCard.appendChild(compDamageContainer); 
+        
+                HitAttributes(damage, userCard, compMainTools);
+        
+                BattleArenaContent(2); 
+            }, 500);
+        }
+        else if (compChoice[randomChoice] === 'Switch')
+        {
+            compMainTools.cardSwitches--; 
+            console.log('Computer Card Switches Left: ', compMainTools.cardSwitches); // Testing 
+            CompTactics(compChoice[randomChoice]);
+
+            setTimeout(() => {
+                BattleArenaContent(1); 
+            }, 500); 
+        }
+    }
+    else // If the user misses the first attack, the computer will initiate a regular attack right back before it has card switching capabilities. 
+    {
+        if (atkType === 'Attack')
+        {
+            // const battleStation = document.querySelector('.battle-station'); 
+            document.documentElement.style.setProperty('--battleStationHalfWidth', `${-(battleStation.clientWidth / 4)}px`);
+        
+            // const compCard = document.querySelector('.battle-station > div:nth-child(2)'); 
+            compCard.classList.add('comp-atk-movement'); 
+        
+            // const userCard = document.querySelector('.battle-station > div:nth-child(1)');
+        
+            const damage = BattleStats('computer', atkType); 
+            console.log('Computer Attack: ', damage); // Testing
+            console.log('\n'); // Testing
+        
+            setTimeout(() => {
+                const compDamageContainer = document.createElement('div'); 
+                compDamageContainer.classList.add('comp-damage-container'); 
+                compDamageContainer.textContent = damage; 
+                compCard.appendChild(compDamageContainer); 
+        
+                HitAttributes(damage, userCard, compMainTools);
+        
+                BattleArenaContent(2); 
+            }, 500);
+        }
+    }
+}
+
+// Death(): Will remove the card from the battle station when the card esse is zero.
+function Death(){
+    if (compMainTools.mainBattleCard.esse === 0)
+    {
+        const compCard = document.querySelector('.battle-station > div:nth-child(2)'); 
+        compCard.classList.add('death');
+
+        compDeck.forEach((card, index) => {
+            if (card.esse === 0)
+            {
+                compDeck.splice(index, 1); 
+            }
+        });
+
+        // Computers has no more cards in the deck
+        if (compDeck.length === 0)
+        {
+            // WGO: 6 => Reset the 'Battle Arena Content' after 2 seconds so the death animation can process for the last
+            // card before displaying that the computer has beens defeated entirely. 
+            setTimeout(() => {
+                BattleArenaContent(6); 
+            }, 2000); 
+        }
+        else
+        {
+            // WGO: 4 => Reset the 'Battle Arena Content' after 2 seconds so the death animation can finish. 
+            setTimeout(() => {
+                BattleArenaContent(4);
+            }, 2000); 
+        }
+    }
+    else if (userMainTools.mainBattleCard.esse === 0)
+    {
+        const userCard = document.querySelector('.battle-station > div:nth-child(1)');
+        console.log("The user card is dead: ", userCard); // Testing
+    }
+
+}
+
+// HitAtributes(): Will add hit attributes after each attack. 
+function HitAttributes(damage, hitCard, mainTools){
+
+    if (damage === 'Miss!')
+    {
+        // Note: Add miss sound. 
+    }
+    else 
+    {
+        let damageNum = damage.slice(0, 2);
+        damageNum = Number(damageNum); 
+
+        if (damageNum === mainTools.mainBattleCard.atk)
+        {
+            hitCard.classList.add('critical-hit-damage'); 
+            // Note: Add critical hit sound.
+        }
+        else 
+        {
+            hitCard.classList.add('regular-hit-damage');
+            // Note: Add regular hit sound. 
+        }
+    }
 }

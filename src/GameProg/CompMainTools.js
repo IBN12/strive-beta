@@ -3,5 +3,7 @@ export let compMainTools = {
     stopDuplicateTest: false, 
     newCompDeck: [], 
     mainBattleCard: null,
-    singularityPoints: 0, 
+    singularityPoints: 0,
+    cardSwitches: 0, 
+    cardsToSwitch: [], 
 }

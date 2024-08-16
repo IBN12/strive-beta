@@ -1,6 +1,7 @@
 import { InitializeDOMContent } from "./DOM-Content/DomContent";
 import { ShuffleCardsContent } from "./GameContent/ShuffleCardsContent";
 import { LoadingRoom } from "./GameContent/LoadingRoom";
+import battleThemeTest from './Sounds/BattleThemes/battleTheme.wav'; 
 import "./styles/styles.css"; 
 
 console.log("|Strive Beta|"); // Testing
@@ -62,6 +63,13 @@ InitializeDOMContent();
  * each attack that isn't a miss. There are three types of attacks: regular attack, critical attack, and miss. Regular attacks cause regular damage, and 
  * critical attacks cause critical damage. The 'Control Station' function will allow the user to initiate commands during battle. The 'Button Activity Time' function
  * will use the BAT system. The BAT system will disable UI and button controls in the application during battle animations to prevent errors. 
+ * 
+ * Date: August-15-2024
+ * New content has been added to the 'BattleArenaContent' function. The computer now has the ability to switch cards. This ability will need to be refactored 
+ * in order for the computer to make more intelligent decisions. Details about the computers card switching capabilities are commented in the 'ComputerAttack'
+ * function. A 'battle theme' audio has been added to the 'Test Content Section'. Once the user hits the 'test button', the audio will play for the 
+ * Battle Arena Content. A new GameProg file called 'CompTactics' was created and will contain a function called 'CompTatics'. This function will process
+ * all the computers non-lethal moves such switching cards from the their deck.  
 */
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -78,5 +86,8 @@ content.appendChild(testButton);
 function LoadUp()
 {
     LoadingRoom(1); 
+    const battleThemeOne = new Audio(battleThemeTest);
+    battleThemeOne.play();
+    battleThemeOne.volume = 0.10; 
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

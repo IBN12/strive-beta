@@ -6,6 +6,7 @@ export let InitiatorCards = [
         def: 12,
         esse: 100,
         tempName: 'Tobo',
+        defending: false,
         beenHit: false, 
     },
     {
@@ -15,6 +16,7 @@ export let InitiatorCards = [
         def: 10,
         esse: 100,
         tempName: 'Jace',
+        defending: false, 
         beenHit: false,
     }, 
     {
@@ -24,6 +26,7 @@ export let InitiatorCards = [
         def: 11,
         esse: 100,
         tempName: 'Spunky', 
+        defending: false,
         beenHit: false,
     },
     {
@@ -33,6 +36,7 @@ export let InitiatorCards = [
         def: 18,
         esse: 100,
         tempName: 'Rotao',
+        defending: false, 
         beenHit: false, 
     },
     {
@@ -42,6 +46,7 @@ export let InitiatorCards = [
         def: 15,
         esse: 100, 
         tempName: 'Ally',
+        defending: false,
         beenHit: false, 
     },
     {
@@ -51,6 +56,7 @@ export let InitiatorCards = [
         def: 13,
         esse: 100, 
         tempName: 'Mason',
+        defending: false, 
         beenHit: false, 
     },
     {
@@ -60,6 +66,7 @@ export let InitiatorCards = [
         def: 22,
         esse: 100,
         tempName: 'Dan', 
+        defending: false,
         beenHit: false, 
     },
     {
@@ -69,6 +76,7 @@ export let InitiatorCards = [
         def: 28,
         esse: 100,
         tempName: 'Mac', 
+        defending: false, 
         beenHit: false, 
     },
     {
@@ -78,6 +86,7 @@ export let InitiatorCards = [
         def: 26,
         esse: 100,
         tempName: 'Karen',
+        defending: false, 
         beenHit: false, 
     },
     {
@@ -87,6 +96,7 @@ export let InitiatorCards = [
         def: 25,
         esse: 100,
         tempName: 'Ken', 
+        defending: false, 
         beenHit: false, 
     }
 ]

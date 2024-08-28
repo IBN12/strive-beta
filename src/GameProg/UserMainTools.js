@@ -5,4 +5,6 @@ export let userMainTools = {
     mainBattleCard: null, 
     switchCard: null, 
     singularityPoints: 0, 
+    priorMove: null,
+    isDefending: false, 
 }

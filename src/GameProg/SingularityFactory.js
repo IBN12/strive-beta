@@ -2,14 +2,22 @@ import { userMainTools } from "./UserMainTools";
 import { compMainTools } from "./CompMainTools";
 
 // SingularityFactory(): Singularity production.
-export function SingularityFactory(atkPoint, producer){
+export function SingularityFactory(atkPoint, defPoint ,producer){
     if (producer === 'user')
     {
         UserSingularityCalculator(atkPoint); 
     }
     else 
     {
-        ComputerSingularityCalculator(atkPoint); 
+        if (userMainTools.isDefending)
+        {
+            ComputerSingularityCalculatorPlusDef(atkPoint, defPoint); 
+        }
+        else
+        {
+            ComputerSingularityCalculator(atkPoint); 
+        }
+        
     }
 }
 
@@ -23,6 +31,7 @@ function UserSingularityCalculator(atkPoint){
      * 2/3 => 30 sp
      * 3/4 => 50 sp
      * 1 => 80 sp
+     * 
     */
 
     const decOne = 1/3;
@@ -82,5 +91,36 @@ function ComputerSingularityCalculator(atkPoint){
     else if (atkPoint === 1)
     {
         compMainTools.singularityPoints += 80;
+    }
+}
+
+// ComputerSingularityCalculatorPlusDef(): Will convert all the attack points to singularity points for the computer plus user defense. 
+function ComputerSingularityCalculatorPlusDef(atkPoint, defPoint){
+    const decOne = 1/3;
+    const decTwo = 2/3;
+
+    if (atkPoint === 0)
+    {
+        compMainTools.singularityPoints += 0;
+    }
+    else if (atkPoint === Number(decOne.toFixed(1)))
+    {
+        compMainTools.singularityPoints += (10 - Math.trunc((defPoint/100) * 10)); 
+    }
+    else if (atkPoint === 1/2)
+    {
+        compMainTools.singularityPoints += (20 - Math.trunc((defPoint/100) * 20));
+    }
+    else if (atkPoint === Number(decTwo.toFixed(1)))
+    {
+        compMainTools.singularityPoints += (30 - Math.trunc((defPoint/100) * 30)); 
+    }
+    else if (atkPoint === 3/4)
+    {
+        compMainTools.singularityPoints += (50 - Math.trunc((defPoint/100) * 50)); 
+    }
+    else if (atkPoint === 1)
+    {
+        compMainTools.singularityPoints += (80 - Math.trunc((defPoint/100) * 80)); 
     }
 }

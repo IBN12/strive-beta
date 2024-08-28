@@ -70,6 +70,13 @@ InitializeDOMContent();
  * function. A 'battle theme' audio has been added to the 'Test Content Section'. Once the user hits the 'test button', the audio will play for the 
  * Battle Arena Content. A new GameProg file called 'CompTactics' was created and will contain a function called 'CompTatics'. This function will process
  * all the computers non-lethal moves such switching cards from the their deck.  
+ * 
+ * Date: August-27-2024
+ * New content has been added to the 'BattleArenaContent' function. The user has the ability to the defend during battle. The defense point will be a decimal
+ * result obtained from the attack point, and subtracted from the attack point for the essence card stat. A new function called the 'Progressive Data Intelligence'
+ * will be used to decide to every computer response, you can think of it as a computer intelligence function where the computer will respond to the users moves,
+ * and base these moves around the current stats and attributes that the computer contains. These function is however temporary at the moment and maybe changed to
+ * something else more suitable for computer intelligence. 
 */
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

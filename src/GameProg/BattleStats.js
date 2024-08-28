@@ -24,7 +24,7 @@ function UserBattleStats(atkType){
         const atkPoints = [Number(decOne.toFixed(1)), 1/2, 0, Number(decTwo.toFixed(1)), 3/4, 1, 0];
         const atkIndex = AttackPoints(atkPoints.length);
     
-        SingularityFactory(atkPoints[atkIndex], 'user'); 
+        SingularityFactory(atkPoints[atkIndex], compMainTools.mainBattleCard.def, 'user'); 
     
         compMainTools.mainBattleCard.esse = compMainTools.mainBattleCard.esse - (userMainTools.mainBattleCard.atk * atkPoints[atkIndex]);
         compMainTools.mainBattleCard.esse = Math.trunc(compMainTools.mainBattleCard.esse); 
@@ -33,20 +33,6 @@ function UserBattleStats(atkType){
         if (compMainTools.mainBattleCard.esse <= 0)
         {
             compMainTools.mainBattleCard.esse = 0; 
-        }
-
-        // Test if the first comp card has been hit. This allow the computer to use more battle tactics when triggered:
-        if (compMainTools.cardSwitches === 0)
-        {
-            if (atkPoints[atkIndex] !== 0) // If not a miss, then a hit. 
-            {
-                compDeck.forEach((card) => {
-                    if (card.name === compMainTools.mainBattleCard.name)
-                    {
-                        card.beenHit = true; 
-                    }
-                });
-            }
         }
             
         if (atkPoints[atkIndex] === 0)
@@ -73,27 +59,59 @@ function ComputerBattleStats(atkType){
         const atkPoints = [Number(decOne.toFixed(1)), 1/2, 0, Number(decTwo.toFixed(1)), 3/4, 1, 0];
         const atkIndex = AttackPoints(atkPoints.length);
         
-        SingularityFactory(atkPoints[atkIndex], 'comp'); 
+        SingularityFactory(atkPoints[atkIndex], userMainTools.mainBattleCard.def, 'comp'); 
 
-        userMainTools.mainBattleCard.esse = userMainTools.mainBattleCard.esse - (compMainTools.mainBattleCard.atk * atkPoints[atkIndex]); 
-        userMainTools.mainBattleCard.esse = Math.trunc(userMainTools.mainBattleCard.esse); 
+        if (userMainTools.isDefending)
+        {
+            console.log('Attack Points: ', atkPoints[atkIndex]); // Testing
+            const defPoint = Math.trunc((compMainTools.mainBattleCard.atk * atkPoints[atkIndex]) * (userMainTools.mainBattleCard.def/100));
+
+            userMainTools.mainBattleCard.esse = userMainTools.mainBattleCard.esse - ((compMainTools.mainBattleCard.atk * atkPoints[atkIndex]) - defPoint);
+
+            userMainTools.mainBattleCard.esse = Math.trunc(userMainTools.mainBattleCard.esse); 
+        }
+        else
+        {
+            userMainTools.mainBattleCard.esse = userMainTools.mainBattleCard.esse - (compMainTools.mainBattleCard.atk * atkPoints[atkIndex]); 
+            userMainTools.mainBattleCard.esse = Math.trunc(userMainTools.mainBattleCard.esse); 
+        }
 
         if (userMainTools.mainBattleCard.esse <= 0)
         {
             userMainTools.mainBattleCard.esse = 0; 
         }
 
-        if (atkPoints[atkIndex] === 0)
+        if (userMainTools.isDefending)
         {
-            return 'Miss!';
-        }
-        else if (atkPoints[atkIndex] === 1)
-        {
-            return `${compMainTools.mainBattleCard.atk} Critical Hit!`; 
+            const defPoint = Math.trunc((compMainTools.mainBattleCard.atk * atkPoints[atkIndex]) * (userMainTools.mainBattleCard.def/100));
+            
+            if (atkPoints[atkIndex] === 0)
+            {
+                return 'Miss!'; 
+            }
+            else if (atkPoints[atkIndex] === 1)
+            {
+                return `${Math.trunc(compMainTools.mainBattleCard.atk - defPoint)} Damage!`;
+            }
+            else
+            {
+                return `${Math.trunc((compMainTools.mainBattleCard.atk * atkPoints[atkIndex]) - defPoint)} Damage!`; 
+            }
         }
         else 
         {
-            return `${Math.trunc(compMainTools.mainBattleCard.atk * atkPoints[atkIndex])} Damage!`; 
+            if (atkPoints[atkIndex] === 0)
+            {
+                return 'Miss!';
+            }
+            else if (atkPoints[atkIndex] === 1)
+            {
+                return `${compMainTools.mainBattleCard.atk} Critical Hit!`; 
+            }
+            else 
+            {
+                return `${Math.trunc(compMainTools.mainBattleCard.atk * atkPoints[atkIndex])} Damage!`; 
+            }
         }
     }  
 }
@@ -103,4 +121,11 @@ function AttackPoints(length){
     const atkIndex = Math.floor(Math.random() * length); 
 
     return atkIndex; 
+}
+
+// DefendPoints(): Returns a defend point integer.
+function DefendPoints(length){
+    const defIndex = Math.floor(Math.random() * length); 
+
+    return defIndex; 
 }

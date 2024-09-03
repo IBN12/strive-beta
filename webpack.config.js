@@ -20,7 +20,11 @@ module.exports = {
             {
                 test: /\.wav/,
                 type: 'asset/resource',
-            }
+            },
+            {
+                test: /\.mp3/,
+                type: 'asset/resource', 
+            },
         ],
     },
 };

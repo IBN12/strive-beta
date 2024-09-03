@@ -8,4 +8,6 @@ export let compMainTools = {
     cardsToSwitch: [], 
     compChoiceOne: ['Attack', 'Defend', 'Switch'], 
     compChoiceTwo: ['Attack', 'Defend'], 
+    isDefending: false, 
+    compMisses: [], 
 }

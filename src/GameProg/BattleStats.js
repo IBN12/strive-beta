@@ -25,27 +25,58 @@ function UserBattleStats(atkType){
         const atkIndex = AttackPoints(atkPoints.length);
     
         SingularityFactory(atkPoints[atkIndex], compMainTools.mainBattleCard.def, 'user'); 
-    
-        compMainTools.mainBattleCard.esse = compMainTools.mainBattleCard.esse - (userMainTools.mainBattleCard.atk * atkPoints[atkIndex]);
-        compMainTools.mainBattleCard.esse = Math.trunc(compMainTools.mainBattleCard.esse); 
+
+        if (compMainTools.isDefending)
+        {
+            console.log('User Attack Point: ', atkPoints[atkIndex]); // Testing 
+            const defPoint = Math.trunc((userMainTools.mainBattleCard.atk * atkPoints[atkIndex]) * (compMainTools.mainBattleCard.def/100));
+            compMainTools.mainBattleCard.esse = compMainTools.mainBattleCard.esse - ((userMainTools.mainBattleCard.atk * atkPoints[atkIndex]) - defPoint); 
+            compMainTools.mainBattleCard.esse = Math.trunc(compMainTools.mainBattleCard.esse);  
+        }
+        else
+        {
+            compMainTools.mainBattleCard.esse = compMainTools.mainBattleCard.esse - (userMainTools.mainBattleCard.atk * atkPoints[atkIndex]);
+            compMainTools.mainBattleCard.esse = Math.trunc(compMainTools.mainBattleCard.esse); 
+        }
+
     
         // Computer Life/Essence: 
         if (compMainTools.mainBattleCard.esse <= 0)
         {
             compMainTools.mainBattleCard.esse = 0; 
         }
-            
-        if (atkPoints[atkIndex] === 0)
+
+        // Return the damage results depening if the computer was defending or not. 
+        if (compMainTools.isDefending)
         {
-            return 'Miss!'; 
-        }
-        else if (atkPoints[atkIndex] === 1)
-        {
-            return `${userMainTools.mainBattleCard.atk} Critial Hit!`;
+            const defPoint = Math.trunc((userMainTools.mainBattleCard.atk * atkPoints[atkIndex]) * (compMainTools.mainBattleCard.def/100));
+            if (atkPoints[atkIndex] === 0)
+            {
+                return 'Miss!'; 
+            }
+            else if (atkPoints[atkIndex] === 1)
+            {
+                return `${Math.trunc(userMainTools.mainBattleCard.atk - defPoint)} Damage!`;
+            }
+            else
+            {
+                return `${Math.trunc((userMainTools.mainBattleCard.atk * atkPoints[atkIndex]) - defPoint)} Damage!`; 
+            }
         }
         else 
         {
-            return `${Math.trunc(userMainTools.mainBattleCard.atk * atkPoints[atkIndex])} Damage!`;
+            if (atkPoints[atkIndex] === 0)
+            {
+                return 'Miss!'; 
+            }
+            else if (atkPoints[atkIndex] === 1)
+            {
+                return `${userMainTools.mainBattleCard.atk} Critial Hit!`;
+            }
+            else 
+            {
+                return `${Math.trunc(userMainTools.mainBattleCard.atk * atkPoints[atkIndex])} Damage!`;
+            }
         }
     }
 }
@@ -63,7 +94,7 @@ function ComputerBattleStats(atkType){
 
         if (userMainTools.isDefending)
         {
-            console.log('Attack Points: ', atkPoints[atkIndex]); // Testing
+            console.log('Comp Attack Point: ', atkPoints[atkIndex]); // Testing
             const defPoint = Math.trunc((compMainTools.mainBattleCard.atk * atkPoints[atkIndex]) * (userMainTools.mainBattleCard.def/100));
 
             userMainTools.mainBattleCard.esse = userMainTools.mainBattleCard.esse - ((compMainTools.mainBattleCard.atk * atkPoints[atkIndex]) - defPoint);
@@ -84,7 +115,7 @@ function ComputerBattleStats(atkType){
         if (userMainTools.isDefending)
         {
             const defPoint = Math.trunc((compMainTools.mainBattleCard.atk * atkPoints[atkIndex]) * (userMainTools.mainBattleCard.def/100));
-            
+
             if (atkPoints[atkIndex] === 0)
             {
                 return 'Miss!'; 

@@ -33,7 +33,19 @@ export function ProgressiveDataIntelligence(data){
 
         if (compMainTools.mainBattleCard.cate === 'supra')
         {
-            if (compMainTools.mainBattleCard.esse < (0.50 * 100) && compDeck.length > 1)
+            // Note 1: This type of TODO should be done with all the other categories to add more 
+            // dynamic intelligence for the computer:
+            // Note 2: This is just a temporary intelligent pattern for now until 
+            if (compMainTools.mainBattleCard.esse > (0.50 * 100) && compDeck.length > 1)
+            {
+                if (compMainTools.compMisses.length >= 3)
+                {
+                    const randomChoice = Math.floor(Math.random() * compMainTools.compChoiceOne.length);
+
+                    return compMainTools.compChoiceOne[randomChoice];  
+                }
+            }
+            else if (compMainTools.mainBattleCard.esse < (0.50 * 100) && compDeck.length > 1)
             {
                 // Computer Choice One - Comp Deck Length > 1: 'Attack', 'Defend', 'Switch'.
                 const randomChoice = Math.floor(Math.random() * compMainTools.compChoiceOne.length);

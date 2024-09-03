@@ -5,7 +5,14 @@ import { compMainTools } from "./CompMainTools";
 export function SingularityFactory(atkPoint, defPoint ,producer){
     if (producer === 'user')
     {
-        UserSingularityCalculator(atkPoint); 
+        if (compMainTools.isDefending)
+        {
+            UserSingularityCalculatorPlusDef(atkPoint, defPoint); 
+        }
+        else 
+        {
+            UserSingularityCalculator(atkPoint); 
+        }
     }
     else 
     {
@@ -60,6 +67,37 @@ function UserSingularityCalculator(atkPoint){
     else if (atkPoint === 1)
     {
         userMainTools.singularityPoints += 80;
+    }
+}
+
+// UserSingularityCalculatorPlusDef(): Will convert all the attack points to singularity points for the user plus computer defense. 
+function UserSingularityCalculatorPlusDef(atkPoint, defPoint){
+    const decOne = 1/3;
+    const decTwo = 2/3;
+
+    if (atkPoint === 0)
+    {
+        userMainTools.singularityPoints += 0;
+    }
+    else if (atkPoint === Number(decOne.toFixed(1)))
+    {
+        userMainTools.singularityPoints += (10 - Math.trunc((defPoint/100) * 10)); 
+    }
+    else if (atkPoint === 1/2)
+    {
+        userMainTools.singularityPoints += (20 - Math.trunc((defPoint/100) * 20));
+    }
+    else if (atkPoint === Number(decTwo.toFixed(1)))
+    {
+        userMainTools.singularityPoints += (30 - Math.trunc((defPoint/100) * 30)); 
+    }
+    else if (atkPoint === 3/4)
+    {
+        userMainTools.singularityPoints += (50 - Math.trunc((defPoint/100) * 50)); 
+    }
+    else if (atkPoint === 1)
+    {
+        userMainTools.singularityPoints += (80 - Math.trunc((defPoint/100) * 80)); 
     }
 }
 

@@ -34,7 +34,9 @@ import { ProgressiveDataIntelligence } from "../GameProg/PDI";
  * controls = 7 => Resets the original content after the computer has switched their 'main battle card' out with 
  * another from the card deck. The computer will be allowed to attack after switching their card out. 
  * 
- * controls = 8 => TODO: The user and computer will have defend on during the next move. 
+ * controls = 8 => Resets all the original content when the user or computer are defending. The 'Battle Station'
+ * function will use a '4' as a parameter to check if either the user or the computer are defending before 
+ * the initial reset.   
 */
 
 // BattleArenaContent(): The main battle arena content.
@@ -68,6 +70,7 @@ export function BattleArenaContent(controls){
         CardDeckStation(); 
         ControlStation(); 
         ButtonActivityTime(1);
+        // CardsDefending();
     }
     else if (controls === 2)
     {
@@ -136,7 +139,7 @@ export function BattleArenaContent(controls){
         battleArenaContent.removeChild(cardDeckStation); 
         battleArenaContent.removeChild(controlStation); 
 
-        userMainTools.priorMove = 'Computer Switch'; 
+        // userMainTools.priorMove = 'Computer Switch'; 
 
         SingularityPointStation(); 
         BattleStation(1);
@@ -158,10 +161,11 @@ export function BattleArenaContent(controls){
         battleArenaContent.removeChild(controlStation); 
 
         SingularityPointStation(); 
-        BattleStation(1); 
+        BattleStation(4); // 4 =>  Checks if either the user or computer are defending before the initial reset.  
         CardStatStation();
         CardDeckStation(); 
         ControlStation();
+        ButtonActivityTime(2); 
     }
 }
 
@@ -247,6 +251,12 @@ function BattleStation(controls){
     const battleStation = document.createElement('div'); 
     battleStation.classList.add('battle-station');
 
+    /** |Controls Manual|
+     * 1 => Card Switching
+     * 2 => 
+     * 4 => Checks if the user or computer are defending before the initial reset. 
+    */
+
     // Main User Battle Card:
     const userCard = document.createElement('div');
     if (controls === null)
@@ -254,8 +264,18 @@ function BattleStation(controls){
         userMainTools.mainBattleCard = userDeck[0];
         userCard.textContent = userMainTools.mainBattleCard.name; 
     }
+    else if (controls === 0)
+    {
+        userCard.textContent = userMainTools.mainBattleCard.name;  
+    }
     else if (controls === 1)
     {
+        // WGO: Check first if the user is still defending when the comp switches cards. 
+        if (userMainTools.isDefending)
+        {
+            userCard.classList.add('user-def-movement');
+        }
+
         userCard.textContent = userMainTools.mainBattleCard.name; 
     }
     else if (controls === 2)
@@ -266,6 +286,14 @@ function BattleStation(controls){
     {
         userCard.textContent = userMainTools.mainBattleCard.name; 
     }
+    else if (controls === 4)
+    {
+        if (userMainTools.isDefending)
+        {
+            userCard.classList.add('user-def-movement');
+        }
+        userCard.textContent = userMainTools.mainBattleCard.name;  
+    }
 
     // Main Computer Battle Card: 
     const compCard = document.createElement('div');
@@ -274,8 +302,18 @@ function BattleStation(controls){
         compMainTools.mainBattleCard = compDeck[0];
         compCard.textContent = compMainTools.mainBattleCard.name; 
     }
+    else if (controls === 0)
+    {
+        compCard.textContent = compMainTools.mainBattleCard.name; 
+    }
     else if (controls === 1)
     {
+        // WGO: Check first if the computer is defending when the user switches cards. 
+        if (compMainTools.isDefending)
+        {
+            compCard.classList.add('comp-def-movement'); 
+        }
+
         compCard.textContent = compMainTools.mainBattleCard.name; 
     }
     else if (controls === 2)
@@ -287,6 +325,14 @@ function BattleStation(controls){
     {
         compMainTools.mainBattleCard = null; 
         compCard.textContent = 'No Card'; 
+    }
+    else if(controls === 4)
+    {
+        if (compMainTools.isDefending)
+        {
+            compCard.classList.add('comp-def-movement'); 
+        }
+        compCard.textContent = compMainTools.mainBattleCard.name; 
     }
 
     battleStation.appendChild(userCard); 
@@ -467,15 +513,22 @@ function UserAttack(e){
         }); 
 
         const damage = BattleStats('user', e.target.textContent); 
-        userMainTools.priorAttack = damage; 
+        console.log(damage); // Testing 
+        userMainTools.priorAttack = damage;
+
+        // WGO: If the computer is defending from its last move, then mark its defending as false after the user move. 
+        if (compMainTools.isDefending)
+        {
+            compMainTools.isDefending = false; 
+        }
 
         // WGO: .5 seconds to display the amount of damage to the computer and reset the 'Battle Arena Content'. 
         // Check The "Battle Arena Content Manual" for more. 
         setTimeout(() => {
-            const damageContainer = document.createElement('div');
-            damageContainer.classList.add('damage-container'); 
-            damageContainer.textContent = damage; 
-            compCard.appendChild(damageContainer);
+            const compDamageContainer = document.createElement('div');
+            compDamageContainer.classList.add('comp-damage-container'); 
+            compDamageContainer.textContent = damage; 
+            compCard.appendChild(compDamageContainer);
 
             HitAttributes(damage, compCard, compMainTools, userMainTools); 
 
@@ -533,11 +586,17 @@ function ComputerAttack(){
         console.log('Computer Attack: ', damage); // Testing
         console.log('\n'); // Testing
 
+        // Collect computer misses. 
+        if (damage === 'Miss!')
+        {
+            compMainTools.compMisses.push(damage);
+        }
+
         setTimeout(() => {
-            const compDamageContainer = document.createElement('div'); 
-            compDamageContainer.classList.add('comp-damage-container'); 
-            compDamageContainer.textContent = damage; 
-            compCard.appendChild(compDamageContainer); 
+            const userDamageContainer = document.createElement('div'); 
+            userDamageContainer.classList.add('user-damage-container'); 
+            userDamageContainer.textContent = damage; 
+            userCard.appendChild(userDamageContainer); 
                 
             HitAttributes(damage, userCard, userMainTools, compMainTools);
 
@@ -554,7 +613,7 @@ function ComputerAttack(){
         console.log('Computer Switches Cards'); // Testing 
         console.log('\n'); // Testing 
 
-        userMainTools.isDefending = false;
+        userMainTools.priorMove = 'Computer Switch'; 
 
         setTimeout(() => {
             BattleArenaContent(7); 
@@ -562,11 +621,13 @@ function ComputerAttack(){
     }
     else if (pdiValue === 'Defend')
     {
-        console.log('Computer is Defending'); // Testing 
-        console.log('\n'); // Testing 
+        console.log('Computer Is Defending'); // Testing 
+        compMainTools.isDefending = true;
+        userMainTools.isDefending = false; 
 
-        userMainTools.isDefending = false;
-
+        // WGO: 8 => Resets all the original content when the user or the computer decides to defend. 
+        // Will check use a 4 in the 'battle station' function to test if either the computer or
+        // the user is defending.
         setTimeout(() => {
             BattleArenaContent(8);
         }, 500);
@@ -584,12 +645,18 @@ function ComputerAttack(){
         const damage = BattleStats('computer', 'Attack'); 
         console.log('Computer Attack: ', damage); // Testing
         console.log('\n'); // Testing
+
+        // Collect computer misses. 
+        if (damage === 'Miss!')
+        {
+            compMainTools.compMisses.push(damage);
+        }
                 
         setTimeout(() => {
-            const compDamageContainer = document.createElement('div'); 
-            compDamageContainer.classList.add('comp-damage-container'); 
-            compDamageContainer.textContent = damage; 
-            compCard.appendChild(compDamageContainer); 
+            const userDamageContainer = document.createElement('div'); 
+            userDamageContainer.classList.add('user-damage-container'); 
+            userDamageContainer.textContent = damage; 
+            userCard.appendChild(userDamageContainer); 
                 
             HitAttributes(damage, userCard, userMainTools, compMainTools);
 
@@ -602,14 +669,21 @@ function ComputerAttack(){
 
 // UserDefend(): Will handle all user defends.
 function UserDefend(){
-    const userCard = document.querySelector('.battle-station > div:nth-child(1)'); 
-    userCard.classList.add('user-def-movement');
-
+    console.log('User Is Defending'); // Testing 
     userMainTools.isDefending = true;
+    userMainTools.priorMove = 'Defend'; 
+    compMainTools.isDefending = false; 
+    
+    // WGO: 8 => Resets all the original content when the user or the computer decides to defend. 
+    // Will check use a 4 in the 'battle station' function to test if either the computer or
+    // the user is defending.
+    setTimeout(() => {
+        BattleArenaContent(8);
+    }, 500)
 
     setTimeout(() => {
         ComputerAttack();
-    }, 500);
+    }, 1000);
 }
 
 // Death(): Will remove the card from the battle station when the card esse is zero.

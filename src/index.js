@@ -1,7 +1,9 @@
 import { InitializeDOMContent } from "./DOM-Content/DomContent";
 import { ShuffleCardsContent } from "./GameContent/ShuffleCardsContent";
 import { LoadingRoom } from "./GameContent/LoadingRoom";
+
 import battleThemeTest from './Sounds/BattleThemes/battleTheme.wav'; 
+import mainMenuThemeTest from './Sounds/GeneralThemes/soshu1.mp3'; 
 import "./styles/styles.css"; 
 
 console.log("|Strive Beta|"); // Testing
@@ -77,6 +79,8 @@ InitializeDOMContent();
  * will be used to decide to every computer response, you can think of it as a computer intelligence function where the computer will respond to the users moves,
  * and base these moves around the current stats and attributes that the computer contains. These function is however temporary at the moment and maybe changed to
  * something else more suitable for computer intelligence. 
+ * 
+ * Current Work/Continue Where Last Left Off: Add defense movement to the computer. 
 */
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -94,7 +98,27 @@ function LoadUp()
 {
     LoadingRoom(1); 
     const battleThemeOne = new Audio(battleThemeTest);
-    battleThemeOne.play();
-    battleThemeOne.volume = 0.10; 
+    // battleThemeOne.play();
+    // battleThemeOne.volume = 0.10; 
+}
+
+// Testing the Main Menu Music with button inside of the 'main menu content' function. (Method 1); 
+// Note: This method with Fade In/Out might work perfectly. 
+const testMainMenuMusic = document.createElement('button'); 
+testMainMenuMusic.textContent = 'Test Main Menu Music'; 
+
+const mainMenuContent = document.querySelector('.main-menu-content');
+mainMenuContent.appendChild(testMainMenuMusic);
+
+testMainMenuMusic.addEventListener('click', TestMainMenuMusic);
+
+function TestMainMenuMusic(){
+    const newAudio = new Audio(mainMenuThemeTest);
+    newAudio.play();
+    newAudio.volume = 0.50;
+    setTimeout(() => {
+        TestMainMenuMusic(); 
+    }, 11500); 
+
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

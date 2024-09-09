@@ -9,5 +9,7 @@ export let compMainTools = {
     compChoiceOne: ['Attack', 'Defend', 'Switch'], 
     compChoiceTwo: ['Attack', 'Defend'], 
     isDefending: false, 
-    compMisses: [], 
+    supraMisses: [],
+    fereMisses: [],
+    bonumMisses: [], 
 }

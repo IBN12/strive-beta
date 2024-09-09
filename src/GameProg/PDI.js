@@ -33,12 +33,12 @@ export function ProgressiveDataIntelligence(data){
 
         if (compMainTools.mainBattleCard.cate === 'supra')
         {
-            // Note 1: This type of TODO should be done with all the other categories to add more 
-            // dynamic intelligence for the computer:
-            // Note 2: This is just a temporary intelligent pattern for now until 
+            // Note 1: This is a temporary computer intelligence element. This element
+            // will focus on certain computer movements that affect the computer 
+            // when the essence is above 50%. 
             if (compMainTools.mainBattleCard.esse > (0.50 * 100) && compDeck.length > 1)
             {
-                if (compMainTools.compMisses.length >= 3)
+                if (compMainTools.supraMisses.length >= 3) // Supra card has three misses. 
                 {
                     const randomChoice = Math.floor(Math.random() * compMainTools.compChoiceOne.length);
 
@@ -62,7 +62,16 @@ export function ProgressiveDataIntelligence(data){
         }
         else if (compMainTools.mainBattleCard.cate === 'fere')
         {
-            if (compMainTools.mainBattleCard.esse < (0.50 * 100) && compDeck.length > 1)
+            if (compMainTools.mainBattleCard.esse > (0.50 * 100) && compDeck.length > 1)
+            {
+                if (compMainTools.fereMisses.length >= 3) // Fere card has three misses. 
+                {
+                    const randomChoice = Math.floor(Math.random() * compMainTools.compChoiceOne.length); 
+
+                    return compMainTools.compChoiceOne[randomChoice];  
+                }
+            }
+            else if (compMainTools.mainBattleCard.esse < (0.50 * 100) && compDeck.length > 1)
             {
                 const randomChoice = Math.floor(Math.random() * compMainTools.compChoiceOne.length); 
 
@@ -77,7 +86,16 @@ export function ProgressiveDataIntelligence(data){
         }
         else if (compMainTools.mainBattleCard.cate === 'bonum')
         {
-            if (compMainTools.mainBattleCard.esse < (0.50 * 100) && compDeck.length > 1)
+            if (compMainTools.mainBattleCard.esse > (0.50 * 100) && compDeck.length > 1)
+            {
+                if (compMainTools.bonumMisses >= 3)
+                {
+                    const randomChoice = Math.floor(Math.random() * compMainTools.compChoiceOne.length); 
+
+                    return compMainTools.compChoiceOne[randomChoice]; 
+                }
+            }
+            else if (compMainTools.mainBattleCard.esse < (0.50 * 100) && compDeck.length > 1)
             {
                 // Bonum Card: Random number for 'Attack', 'Switch', and 'Defend'.
                 const randomChoice = Math.floor(Math.random() * compMainTools.compChoiceOne.length);

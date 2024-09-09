@@ -589,7 +589,18 @@ function ComputerAttack(){
         // Collect computer misses. 
         if (damage === 'Miss!')
         {
-            compMainTools.compMisses.push(damage);
+            if (compMainTools.mainBattleCard.cate === 'supra')
+            {
+                compMainTools.supraMisses.push(damage); 
+            }
+            else if (compMainTools.mainBattleCard.cate === 'fere')
+            {
+                compMainTools.fereMisses.push(damage); 
+            }
+            else if (compMainTools.mainBattleCard.cate === 'bonum')
+            {
+                compMainTools.bonumMisses.push(damage); 
+            }
         }
 
         setTimeout(() => {

@@ -4,6 +4,7 @@ import { userMainTools } from "../GameProg/UserMainTools";
 import { compMainTools } from "../GameProg/CompMainTools";
 import { BattleStats } from "../GameProg/BattleStats";
 import { ProgressiveDataIntelligence } from "../GameProg/PDI";
+import { BattleOver } from "./BattleOver";
 
 /** |Battle Arena Content Manual| 
  * => For 'controls' Parameter:
@@ -138,8 +139,6 @@ export function BattleArenaContent(controls){
         battleArenaContent.removeChild(cardStatStation);
         battleArenaContent.removeChild(cardDeckStation); 
         battleArenaContent.removeChild(controlStation); 
-
-        // userMainTools.priorMove = 'Computer Switch'; 
 
         SingularityPointStation(); 
         BattleStation(1);
@@ -325,6 +324,11 @@ function BattleStation(controls){
     {
         compMainTools.mainBattleCard = null; 
         compCard.textContent = 'No Card'; 
+
+        // END GAME: Computer Defeated - Window pops up to inform you of your win:
+        // NOTE: BattleOver() function will be put here when the computer is defeated by the user. 
+        // BattleOver('Quick Game'); 
+
     }
     else if(controls === 4)
     {
@@ -622,9 +626,10 @@ function ComputerAttack(){
         compMainTools.mainBattleCard = compMainTools.cardsToSwitch[switchIndex]; 
 
         console.log('Computer Switches Cards'); // Testing 
+        console.log('Cards To Switch: ', compMainTools.cardsToSwitch); // Testing 
         console.log('\n'); // Testing 
 
-        userMainTools.priorMove = 'Computer Switch'; 
+        userMainTools.priorMove = 'Computer Switched'; 
 
         setTimeout(() => {
             BattleArenaContent(7); 
@@ -637,7 +642,7 @@ function ComputerAttack(){
         userMainTools.isDefending = false; 
 
         // WGO: 8 => Resets all the original content when the user or the computer decides to defend. 
-        // Will check use a 4 in the 'battle station' function to test if either the computer or
+        // Will check and use a 4 in the 'battle station' function to test if either the computer or
         // the user is defending.
         setTimeout(() => {
             BattleArenaContent(8);
@@ -660,7 +665,18 @@ function ComputerAttack(){
         // Collect computer misses. 
         if (damage === 'Miss!')
         {
-            compMainTools.compMisses.push(damage);
+            if (compMainTools.mainBattleCard.cate === 'supra')
+            {
+                compMainTools.supraMisses.push(damage);
+            }
+            else if (compMainTools.mainBattleCard.cate === 'fere')
+            {
+                compMainTools.fereMisses.push(damage); 
+            }
+            else if (compMainTools.mainBattleCard.cate === 'bonum')
+            {
+                compMainTools.bonumMisses.push(damage); 
+            }
         }
                 
         setTimeout(() => {
@@ -686,7 +702,7 @@ function UserDefend(){
     compMainTools.isDefending = false; 
     
     // WGO: 8 => Resets all the original content when the user or the computer decides to defend. 
-    // Will check use a 4 in the 'battle station' function to test if either the computer or
+    // Will check and use a 4 in the 'battle station' function to test if either the computer or
     // the user is defending.
     setTimeout(() => {
         BattleArenaContent(8);

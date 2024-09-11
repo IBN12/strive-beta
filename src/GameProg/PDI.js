@@ -11,6 +11,8 @@ const storage = {
 // ProgressiveDataIntelligence(): Will gather data for computer intelligence to better challenge the opponent in battle.
 export function ProgressiveDataIntelligence(data){
     
+    compMainTools.cardsToSwitch.length = 0; 
+
     // Find the comps cards that aren't the main battle card. 
     compDeck.forEach((card) => {
         if (card.name !== compMainTools.mainBattleCard.name)

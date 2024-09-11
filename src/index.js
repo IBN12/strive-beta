@@ -1,6 +1,7 @@
 import { InitializeDOMContent } from "./DOM-Content/DomContent";
 import { ShuffleCardsContent } from "./GameContent/ShuffleCardsContent";
 import { LoadingRoom } from "./GameContent/LoadingRoom";
+import { BattleOver } from "./GameContent/BattleOver";
 
 import battleThemeTest from './Sounds/BattleThemes/battleTheme.wav'; 
 import mainMenuThemeTest from './Sounds/GeneralThemes/soshu1.mp3'; 
@@ -85,7 +86,7 @@ InitializeDOMContent();
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // |Testing Content Section|
-// *Testing the 'ShuffleCardsContent' function.
+// Testing the 'ShuffleCardsContent' function.
 ShuffleCardsContent(null);
 
 // Testing the 'loading room' with ShuffleComputerCards.js file. 
@@ -121,4 +122,9 @@ function TestMainMenuMusic(){
     }, 11500); 
 
 }
+
+// Testing the Battle Over (Game Over) Window:
+// Note: The game over window will pop-up when the the user or computer wins a battle. 
+BattleOver('Quick Game');
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

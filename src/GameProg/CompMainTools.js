@@ -12,4 +12,8 @@ export let compMainTools = {
     supraMisses: [],
     fereMisses: [],
     bonumMisses: [], 
+    overallAttacks: 0,
+    overallDefends: 0,
+    overallMisses: 0, 
+    overallSwitches: 0, 
 }

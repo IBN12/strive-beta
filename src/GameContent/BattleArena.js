@@ -4,6 +4,7 @@ import { userMainTools } from "../GameProg/UserMainTools";
 import { compMainTools } from "../GameProg/CompMainTools";
 import { BattleStats } from "../GameProg/BattleStats";
 import { ProgressiveDataIntelligence } from "../GameProg/PDI";
+
 import { BattleOver } from "./BattleOver";
 
 /** |Battle Arena Content Manual| 
@@ -325,9 +326,17 @@ function BattleStation(controls){
         compMainTools.mainBattleCard = null; 
         compCard.textContent = 'No Card'; 
 
-        // END GAME: Computer Defeated - Window pops up to inform you of your win:
+        // END GAME: Computer Defeated - Window pops up to inform you of your win.
         // NOTE: BattleOver() function will be put here when the computer is defeated by the user. 
-        // BattleOver('Quick Game'); 
+        // I will use an if block statement for this sequence to showcase the winner:
+        // 1 => If the user wins. 
+         
+        if (compDeck.length === 0)
+        {
+            setTimeout(() => {
+                BattleOver('Quick Game', 1);
+            }, 2000); 
+        }
 
     }
     else if(controls === 4)
@@ -461,6 +470,7 @@ function CardDeckStation(){
 
 // SwitchCard(): Will switch out the user cards from the battle arena into the card deck.
 function SwitchCard(e){
+    userMainTools.overallSwitches += 1; 
     userMainTools.switchCard = e.target.textContent;  
 
     userDeck.forEach((card) => {
@@ -519,6 +529,16 @@ function UserAttack(e){
         const damage = BattleStats('user', e.target.textContent); 
         console.log(damage); // Testing 
         userMainTools.priorAttack = damage;
+
+        // WGO: Collecting the user game (battle) stats; 
+        if (damage !== 'Miss!')
+        {
+            userMainTools.overallAttacks += 1;
+        }
+        else if (damage === 'Miss!')
+        {
+            userMainTools.overallMisses += 1;
+        }
 
         // WGO: If the computer is defending from its last move, then mark its defending as false after the user move. 
         if (compMainTools.isDefending)
@@ -593,6 +613,8 @@ function ComputerAttack(){
         // Collect computer misses. 
         if (damage === 'Miss!')
         {
+            compMainTools.overallMisses += 1;
+
             if (compMainTools.mainBattleCard.cate === 'supra')
             {
                 compMainTools.supraMisses.push(damage); 
@@ -605,6 +627,10 @@ function ComputerAttack(){
             {
                 compMainTools.bonumMisses.push(damage); 
             }
+        }
+        else
+        {
+            compMainTools.overallAttacks += 1; 
         }
 
         setTimeout(() => {
@@ -622,6 +648,8 @@ function ComputerAttack(){
     }
     else if (pdiValue === 'Switch')
     {
+        compMainTools.overallSwitches += 1;
+
         const switchIndex = Math.floor(Math.random() * compMainTools.cardsToSwitch.length); 
         compMainTools.mainBattleCard = compMainTools.cardsToSwitch[switchIndex]; 
 
@@ -640,6 +668,7 @@ function ComputerAttack(){
         console.log('Computer Is Defending'); // Testing 
         compMainTools.isDefending = true;
         userMainTools.isDefending = false; 
+        compMainTools.overallDefends += 1;
 
         // WGO: 8 => Resets all the original content when the user or the computer decides to defend. 
         // Will check and use a 4 in the 'battle station' function to test if either the computer or
@@ -665,6 +694,8 @@ function ComputerAttack(){
         // Collect computer misses. 
         if (damage === 'Miss!')
         {
+            compMainTools.overallMisses += 1;
+
             if (compMainTools.mainBattleCard.cate === 'supra')
             {
                 compMainTools.supraMisses.push(damage);
@@ -677,6 +708,10 @@ function ComputerAttack(){
             {
                 compMainTools.bonumMisses.push(damage); 
             }
+        }
+        else 
+        {
+            compMainTools.overallAttacks += 1;
         }
                 
         setTimeout(() => {
@@ -700,6 +735,7 @@ function UserDefend(){
     userMainTools.isDefending = true;
     userMainTools.priorMove = 'Defend'; 
     compMainTools.isDefending = false; 
+    userMainTools.overallDefends += 1;
     
     // WGO: 8 => Resets all the original content when the user or the computer decides to defend. 
     // Will check and use a 4 in the 'battle station' function to test if either the computer or

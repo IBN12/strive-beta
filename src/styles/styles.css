@@ -1,5 +1,6 @@
 :root{
     --battleStationHalfWidth:0px; 
+    --inGameMenuWindowY: 0px; 
 }
 /* body - The main body for the browser. */
 body{
@@ -7,6 +8,15 @@ body{
     margin: 0; 
 }
 
+/* |Fonts| */
+/* Font-0 - New Amsterdam */
+@font-face {
+    font-family: new-amsterdam;
+    src: url('../fonts/new-amsterdam/NewAmsterdam-Regular.ttf');
+}
+
+/************************************************************************************************************************************************************************/
+/************************************************************************************************************************************************************************/
 /* * - All the elements in the application. */
 *{
     box-sizing: border-box;
@@ -23,7 +33,9 @@ body{
     /* |Main Content| */
     #content{
         border: 1px solid red; 
+        background-color: #ef4444;
         padding: 5px; 
+        height: 100vh;
     }
 
     /* |Main Menu Content| */
@@ -34,6 +46,115 @@ body{
         gap: 10px;
 
         border: 1px solid blue;
+        background-color: #ef4444; 
+    }
+    .main-menu-content > h1{ /* Game Logo */
+        font-family: new-amsterdam, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+        letter-spacing: 5px;
+        color: #fbbf24;
+    }
+    .main-menu-content > button{ /* Quick Game|Settings|SoSu Studio */
+        border-radius: 10px; 
+        width: 50%; 
+        padding: 5px 10px 5px 10px;
+        background-color: #fbbf24;
+        font-family: new-amsterdam, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+        font-size: 15px;
+    }
+
+    /* |In Game Menu Content| */
+    .in-game-menu-content{
+        /* border: 1px solid green; */
+        padding: 3px;
+    }
+    .in-game-menu-content > div{ /* In Game Menu Container */
+        display: flex;
+        justify-content: end;
+        align-items: center;   
+
+        border: 1px solid #fbbf24;
+        border-radius: 10px; 
+        background-color: #fbbf24;
+        padding: 3px; 
+    }
+    .in-game-menu-content > div > img[src]{ /* In Game Menu Button Image */
+        width: 40px; 
+        transition-property: transform;
+        transition-duration: .5s;
+        /* transition-timing-function: ease-in-out; */
+        /* border: 1px solid black; */
+    }
+    .rotate-in-game-menu{ /* Rotates the In Game Menu Button Image */
+        transform: rotate(90deg); 
+    }
+    .in-game-menu-window{ /* In Game Menu Window */
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        position: relative;
+        border: 1px solid #fbbe24b6;
+        border-radius: 10px;
+        background-color: #fbbe24b6;
+        height: 100%;
+        padding: 20px; 
+    }
+    .in-game-menu-window > div{ /* In Game Menu Window|Close Window Container */
+        display: flex;
+        justify-content: end;
+        align-items: center; 
+        
+        border: 1px solid #ef4444;
+        border-radius: 10px;  
+        background-color: #ef4444; 
+        padding: 3px;
+    }
+    .in-game-menu-window > div > img[src]{ /* In Game Menu Window|Close Window Container|Close Window Button Image */
+        width: 40px; 
+    }
+    .in-game-menu-selection-container{ /* In Game Menu Window| Menu Selection Container */
+        display: flex;
+        flex-direction: column;
+        align-items: center; 
+
+        border: 1px solid black;
+        padding: 5px;
+    }
+    .in-game-menu-selection-container > button { /* Each button for the game menu. */
+        width: 50%;  
+        padding: 5px 10px 5px 10px; 
+        border-radius: 10px; 
+        background-color: #fbbf24; 
+        font-family: new-amsterdam, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+        font-size: 15px;
+    }
+    .open-in-game-menu-window{ /* Will open the In Game Menu Window. */
+        animation-name: openInGameMenuWindowAnim;
+        animation-duration: 1s;
+        animation-timing-function: ease;
+        animation-fill-mode: forwards; 
+    }
+    @keyframes openInGameMenuWindowAnim{
+        from{
+            transform: translate3d(-200px, 600px, 300px); 
+        }
+        to{
+            transform: translate3d(0, var(--inGameMenuWindowY), 0);
+        }
+    }
+    .close-in-game-menu-window{ /* Will close the In Game Menu Window. */
+        animation-name: closeInGameMenuWindowAnim;
+        animation-duration: 1s;
+        animation-timing-function: ease;
+        animation-fill-mode: forwards;
+    }
+    @keyframes closeInGameMenuWindowAnim{
+        from{
+            transform: translate3d(0, -270px, 0);
+        }
+        to{
+            transform: translate3d(-200px, 600px, 300px); 
+        }
     }
 
     /* |Shuffle Cards Content| */
@@ -43,6 +164,8 @@ body{
         gap: 10px;
 
         border: 1px solid  orange; 
+        border-radius: 10px; 
+        background-color: #fbbf24;
         margin-top: 10px;
         padding: 3px;
     }
@@ -52,14 +175,16 @@ body{
         gap: 3px;
 
         padding: 10px;
-        border: 1px solid green; 
+        /* border: 1px solid green;  */
     }
     .display-shuffled-cards > div{ /* Cards in the 'display shuffled cards' */ 
         flex: 1;
 
         text-align: center; 
         font-size: 11px; 
+        font-family: new-amsterdam, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
         border: 1px solid purple;
+        border-radius: 10px;
         height: 80px;
     }
     .shuffle-card-animation{ /* shuffle card animation for 'display shuffled cards' */
@@ -124,8 +249,21 @@ body{
         height: 50px;
     }
 
+    .shuffle-cards-content > button{ /* Shuffle Button & Start Button */
+        border-radius: 10px; 
+        padding: 10px 0 10px 0;
+        background-color: #ef4444;
+        color: white;
+        font-family: new-amsterdam, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+        font-size: 15px;
+        letter-spacing: 7px;
+    }
+
     .display-number-of-shuffles{ /* Display Number of Shuffles */
         border: 1px solid black;
+        border-radius: 10px; 
+        font-family: new-amsterdam, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+        letter-spacing: 5px;
         text-align: center; 
     }
     .shuffle-limit-reached{ /* Shuffle Limit Reached */
@@ -417,16 +555,21 @@ body{
 
     }
 
-    .battle-over-window{ /* Battle Over Window */
+    /* |Battle Over Window| */
+    .battle-over-window{
         display: flex;
         flex-direction: column;
         align-items: center;
+        gap: 5px; 
 
-        position: absolute;
-        width: 100%;
+        /* position: absolute; */
+        width: 100%; 
         height: 300px;
-        background-color: rgba(255, 166, 0, 0.637);
+        background: linear-gradient(to right,#403A3E,#BE5869); 
+        color: #cbd5e1; 
         padding: 5px;
+        font-family: new-amsterdam, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+        border-radius: 10px;
 
         animation-name: battleOverWindowAnim;
         animation-duration: .5s;
@@ -441,8 +584,37 @@ body{
             transform: perspective(800px) translate3d(0, 0, 0);
         }
     }
-    .battle-over-window > div{ /* Prompt One */
-        border: 1px solid black;
+    .battle-over-window > div:nth-child(1){ /* Game Over Prompt  */
+        border: 1px solid #cbd5e1;
+        font-size: 35px;
+        letter-spacing: 3px;
+    }
+    .battle-over-window > div:nth-child(2){ /* Winner Prompt */
+        border: 1px solid #cbd5e1; 
+        font-size: 25px; 
+        letter-spacing: 3px;
+    }
+    .game-stats{ /* Game Stats */
+        display: flex; 
+        gap: 10px;
+
+        border: 1px solid #cbd5e1;
+        padding: 3px; 
         font-size: 20px;
     }
+    .game-stats > div:nth-child(1){ /* User Game Stats */
+        border: 1px solid orange;
+    }
+    .game-stats > div:nth-child(1) > div:nth-child(1){ /* User Game Stats|User Title */
+        border: 1px solid red;
+        text-align: center;
+    }
+    .game-stats > div:nth-child(2){ /* Comp Game Stats */
+        border: 1px solid orange;
+    }
+    .game-stats > div:nth-child(2) > div:nth-child(1){ /* Comp Game Stats|Comp Title */
+        border: 1px solid red; 
+        text-align: center;
+    }
+
 }

@@ -1,3 +1,6 @@
+import { ShuffleCardsContentDOM, InGameMenuDOM } from "../DOM-Content/DomContent";
+import { LoadingRoom } from "./LoadingRoom";
+
 import { userDeck } from "../GameProg/UserDeck";
 import { ShuffleCards } from "../GameProg/ShuffleCards";
 import { userMainTools } from "../GameProg/UserMainTools";
@@ -6,6 +9,8 @@ import closeButton from '../images/tools/window-close.svg';
 
 /** |ShuffleCardsContent() Manual|
  *  For 'controls' Parameter:
+ * controls = null => Will display the initial shuffle cards content when the screen appears. 
+ * 
  * controls = 0 => Reseting the entire shuffle cards content to display 
  * a new amount of user shuffles. 
  * 
@@ -17,6 +22,7 @@ import closeButton from '../images/tools/window-close.svg';
 
 // ShuffleCardsContent(): The main shuffle cards content section.
 export function ShuffleCardsContent(controls){
+    const content = document.getElementById('content');
     const shuffleCardsContent = document.querySelector('.shuffle-cards-content'); 
     const shuffleButton = document.querySelector('.shuffle-cards-content > button:nth-child(2)'); 
     const displayNumberOfShuffles = document.querySelector('.display-number-of-shuffles');
@@ -44,6 +50,12 @@ export function ShuffleCardsContent(controls){
     }
     else if (controls === null)
     {
+        // Note: content.replaceChildren() & ShuffleCardsContentDOM() & InGameMenuDOM() are included here for
+        // Game Mode purposes. Will need to be commented out for test purposes if needed. 
+        content.replaceChildren();
+        InGameMenuDOM(); 
+        ShuffleCardsContentDOM();  
+
         DisplayShuffledCards();
         ShuffleButton();
         DisplayNumberOfShuffles(); 
@@ -110,8 +122,10 @@ function ViewCard(e){
     const shuffleButton = document.querySelector('.shuffle-cards-content > button:nth-child(2)'); 
     const startButton = document.querySelector('.shuffle-cards-content > button:nth-child(4)');
     const displayShuffledCards = document.querySelector('.display-shuffled-cards');
+    const inGameMenuImg = document.querySelector('.in-game-menu-content > div > img[src]');
     
     displayShuffledCards.classList.add('no-clicks');  
+    inGameMenuImg.classList.add('no-clicks'); 
     shuffleButton.disabled = true;
     startButton.disabled = true; 
 
@@ -143,6 +157,7 @@ function CloseViewCard(e){
     const startButton = document.querySelector('.shuffle-cards-content > button:nth-child(4)');
     const displayShuffledCards = document.querySelector('.display-shuffled-cards'); 
     const viewCard = document.querySelector('.view-card');
+    const inGameMenuImg = document.querySelector('.in-game-menu-content > div > img[src]'); 
     viewCard.classList.remove('open-view-card'); 
     viewCard.classList.add('close-view-card'); 
 
@@ -150,6 +165,7 @@ function CloseViewCard(e){
     startButton.disabled = false; 
 
     setTimeout(() => {content.removeChild(viewCard);}, 500); 
+    setTimeout(() => {inGameMenuImg.classList.remove('no-clicks');}, 600); 
     setTimeout(() => {displayShuffledCards.classList.remove('no-clicks');}, 700); 
 }
 
@@ -224,7 +240,13 @@ function StartGame(){
 
     const startGameButton = document.createElement('button');
     startGameButton.textContent = "Start Game"; 
-    startGameButton.addEventListener('click', () => {console.log('TO: ShuffleComputerCards() - Loading Room');})
+    // startGameButton.addEventListener('click', () => {console.log('TO: ShuffleComputerCards() - Loading Room');});
+    startGameButton.addEventListener('click', ActivateLoadingRoom);
 
     shuffleCardsContent.appendChild(startGameButton);
+}
+
+// ActivateLoadingRoom(): Will activate the loading room. 
+function ActivateLoadingRoom(){
+    LoadingRoom(1);  
 }

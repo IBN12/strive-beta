@@ -86,10 +86,10 @@ InitializeDOMContent();
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // |Testing Content Section|
-// Testing the 'ShuffleCardsContent' function.
-ShuffleCardsContent(null);
+// => Testing the 'ShuffleCardsContent' function.
+// ShuffleCardsContent(null);
 
-// Testing the 'loading room' with ShuffleComputerCards.js file. 
+// => Testing the 'loading room' with ShuffleComputerCards.js file. 
 const content = document.getElementById('content'); 
 const testButton = document.createElement('button'); 
 testButton.textContent = "Test Button";  
@@ -103,7 +103,7 @@ function LoadUp()
     // battleThemeOne.volume = 0.10; 
 }
 
-// Testing the Main Menu Music with button inside of the 'main menu content' function. (Method 1); 
+// => Testing the Main Menu Music with button inside of the 'main menu content' function. (Method 1); 
 // Note: This method with Fade In/Out might work perfectly. 
 const testMainMenuMusic = document.createElement('button'); 
 testMainMenuMusic.textContent = 'Test Main Menu Music'; 
@@ -123,8 +123,122 @@ function TestMainMenuMusic(){
 
 }
 
-// Testing the Battle Over (Game Over) Window:
+// => Testing the Battle Over (Game Over) Window:
 // Note: The game over window will pop-up when the the user or computer wins a battle. 
-BattleOver('Quick Game');
+// BattleOver('Quick Game', 1);
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// |Practicing Programming Sequences|
+console.log('|Practicing Programming Sequences|');
+
+// Normal Functions (Named Functions):
+function funkyFunction(music, isWhiteBoy){
+    if (isWhiteBoy)
+    {
+        console.log('Play: ', music); 
+    }
+}
+funkyFunction('that funky music', true); 
+
+// Anonymous Functions: 
+const funkyFunctionOne = function(music, isWhiteBoy){
+    if (isWhiteBoy){
+        console.log('Play: ', music); 
+    }
+}
+funkyFunctionOne('that funky music white boy!', true); 
+
+// Arrow Functions:
+/** These are just a shorter way to write a function. They do have some special rules however,
+ * and understanding the rules imposed by arrow functions will help you understand callbacks.
+ * We're going to ignore the this binding rules for these functions for now.
+ *  If there is only one argument, the parenthesis () can be omitted.
+ *  If arrow functions are one line, the brackets {} can be omitted. 
+ *      When omitting the brackets, the arrow funcion returns the evaluated expression 
+ *      without requiring the return keyword. 
+ */
+const funkyFunctionTwo = (music, isWhiteBoy) => {
+    if (isWhiteBoy){
+        console.log('Play: ', music); 
+    }
+}
+funkyFunctionTwo('funky music white boy!', true); 
+
+const playThat = (funky) => {
+    return funky + " music";
+}
+
+const playThatOne = funky => {
+    return funky + " music"; 
+}
+
+const playThatTwo = funky => funky + " music";
+
+const playThatThree = () => "funky music";
+const playThatFour = () => { return "funky music"; }
+const playThatFive = () => {
+    return "funky music"; 
+}
+
+// What Callbacks Look Like: 
+const notes = ['do', 're', 'me'];
+notes.forEach((note) => console.log(note)); 
+notes.forEach(function(note){
+    console.log(note);
+});
+notes.forEach(console.log); // Vodoo Shizz
+
+/** How Callbacks Works:
+ * Callbacks are just funtions passed into other functions as arguments (as a parameter).
+ * 
+ * Below is what 'forEach' might look like under the hood, notice it calls the callback function
+ * each time it loops over an item. The line with callback(array[i]) is calling the callback 
+ * function with an argument, which we defined inline as an anonymous function.
+ */
+
+function myForEach(array, callback){
+    for (let i = 0; i < array.length; i++){
+        callback(array[i]); // This is when the callback function gets called, or executed. 
+    }
+}
+const myArray = [2, 3, 4, 2];
+
+// Example 1:
+myForEach(myArray, (item) => {
+    console.log('Oh Yes: ', item + 2);
+});
+console.log('\n');
+
+// Example 2: Note: Change the function name to 'myForEach' for this and each example below to view the output in the console log. 
+// const myArrayOne = [2, 3, 4 , 2];
+// myForEachOne(myArrayOne, item => console.log(item + 2)); 
+
+// Example 3: 
+// myForEachTwo(myArrayOne, function(item){
+//     console.log(item + 2);
+// });
+
+// Example 4: 
+// function printItemPlusTwo(item){
+//     console.log(item + 2); 
+// }
+// myForEachThree(myArrayOne, printItemPlusTwo); 
+
+// Another good example of how callbacks work might be the .map method 
+// (read more on MDN), below is one way it might be implemented.
+function myMap(array, callback){
+    const myNewArray = [];
+
+    for (let i = 0; i < array.length; i++){
+        const callbackResult = callback(array[i]); 
+        myNewArray.push(callbackResult); 
+    }
+
+    return myNewArray;
+}
+
+const addedArray = myMap([1, 2, 3], (arrayNum) => {
+    return arrayNum + 2; 
+});
+
+console.log('.map implementation: ', addedArray);

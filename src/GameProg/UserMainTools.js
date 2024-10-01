@@ -7,4 +7,8 @@ export let userMainTools = {
     singularityPoints: 0, 
     priorMove: null,
     isDefending: false, 
+    overallAttacks: 0,
+    overallDefends: 0,
+    overallMisses: 0,
+    overallSwitches: 0, 
 }
